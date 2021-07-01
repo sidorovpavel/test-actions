@@ -24,5 +24,4 @@ jobs:
       - name: hello-action
         uses: ./.github/actions/commit-list
         with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
-          project: ${{secrets.project}}
+          test: ${{secrets.test}}
