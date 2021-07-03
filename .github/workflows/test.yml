@@ -24,4 +24,4 @@ jobs:
       - name: hello-action
         uses: ./.github/actions/commit-list
         with:
-          test: ${{github.event}}
+          test: ${{secrets.test}}
