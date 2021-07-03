@@ -7,6 +7,7 @@ async function run() {
 		console.log(process.env);
 		console.log(github);
 		console.log(github.context.payload);
+		console.log(github.context.payload.pull_request);
 
 		const octokit = github.getOctokit(token);
 
