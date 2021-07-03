@@ -4,12 +4,18 @@ const github = require("@actions/github");
 async function run() {
 	try {
 		const token = core.getInput("repo-token");
-		console.log(process.env);
-		console.log(github);
-		console.log(github.context.payload);
-		console.log(github.context.payload.pull_request);
+
+		const { repository, pull_request } = github.context.payload;
 
 		const octokit = github.getOctokit(token);
+
+		const commits = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
+			owner: repository.owner.login,
+			repo: repository.name,
+			pull_number: pull_request.number
+		});
+
+		console.log(commits);
 
 		// octokit.request
 
