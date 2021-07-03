@@ -24,4 +24,4 @@ jobs:
       - name: commit-list-action
         uses: ./.github/actions/commit-list
         with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
+          repo-token: ${{secrets.TOKEN}}
