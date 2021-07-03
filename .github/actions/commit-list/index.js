@@ -5,6 +5,7 @@ async function run() {
 	try {
 		const test = core.getInput("test");
 		console.log(process.env);
+		console.log(github);
 		// const jokeBody = core.getInput("joke");
 		// const token = core.getInput("repo-token");
 		//
