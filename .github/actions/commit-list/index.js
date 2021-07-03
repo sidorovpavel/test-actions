@@ -9,13 +9,14 @@ async function run() {
 
 		const octokit = github.getOctokit(token);
 
-		const commits = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
+		const response = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
 			owner: repository.owner.login,
 			repo: repository.name,
 			pull_number: pull_request.number
 		});
 
-		console.log(commits);
+		console.log(response.data);
+		console.log(response.data[0].commit);
 
 		// octokit.request
 
