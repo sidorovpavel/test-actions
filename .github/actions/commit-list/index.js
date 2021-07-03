@@ -3,7 +3,7 @@ const github = require("@actions/github");
 
 async function run() {
 	try {
-		const test = core.getInput("test");
+		const token = core.getInput("repo-token");
 		console.log(process.env);
 		console.log(github);
 

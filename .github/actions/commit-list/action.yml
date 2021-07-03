@@ -12,7 +12,7 @@ inputs:
 #  repo-token:
 #    description: "Token with permissions to do repo things"
   repo-token:
-    required: false
+    required: true
     description: "val"
 
 runs:
