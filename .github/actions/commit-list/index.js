@@ -6,6 +6,7 @@ async function run() {
 		const token = core.getInput("repo-token");
 		console.log(process.env);
 		console.log(github);
+		console.log(github.context.payload);
 
 		const octokit = github.getOctokit(token);
 
