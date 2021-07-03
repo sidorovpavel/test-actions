@@ -6,6 +6,11 @@ async function run() {
 		const test = core.getInput("test");
 		console.log(process.env);
 		console.log(github);
+
+		const octokit = github.getOctokit(token);
+
+		// octokit.request
+
 		// const jokeBody = core.getInput("joke");
 		// const token = core.getInput("repo-token");
 		//

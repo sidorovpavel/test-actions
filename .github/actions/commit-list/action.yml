@@ -11,7 +11,7 @@ inputs:
 #    required: true
 #  repo-token:
 #    description: "Token with permissions to do repo things"
-  test:
+  repo-token:
     required: false
     description: "val"
 

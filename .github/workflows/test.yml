@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: hello-action
+      - name: commit-list-action
         uses: ./.github/actions/commit-list
         with:
-          test: ${{secrets.test}}
+          repo-token: ${{secrets.GITHUB_TOKEN}}
