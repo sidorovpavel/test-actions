@@ -25,3 +25,5 @@ jobs:
         uses: ./.github/actions/commit-list
         with:
           repo-token: ${{secrets.TOKEN}}
+          jira-token: ${{secrets.JIRA_TOKEN}}
+          jira-project: ${{secrets.JIRA_PROJECT}}

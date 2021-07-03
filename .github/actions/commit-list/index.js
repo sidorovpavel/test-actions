@@ -15,8 +15,19 @@ async function run() {
 			pull_number: pull_request.number
 		});
 
-		console.log(response.data);
-		console.log(response.data[0].commit);
+		// const messages = response.data.map();
+		const jira_matcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
+		const issues = response.data.reduce((issues, item) => {
+			const names = item.commit.message.split("").reverse().join("").match(jira_matcher);
+			names.forEach(res => {
+				const id = res.split("").reverse().join("");
+				if(issues.indexOf(id)===-1) {
+					issues.push(id)
+				}
+			})
+			return issues;
+		}, []);
+		console.log(issues);
 
 		// octokit.request
 

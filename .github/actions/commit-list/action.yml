@@ -13,7 +13,13 @@ inputs:
 #    description: "Token with permissions to do repo things"
   repo-token:
     required: true
-    description: "val"
+    description: "Token for github"
+  jira-token:
+    required: true
+    description: "Token for Jira"
+  jira-project:
+    required: true
+    description: "Jira project"
 
 runs:
   using: "node12"
