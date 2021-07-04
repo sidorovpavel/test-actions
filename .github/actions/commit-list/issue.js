@@ -3,7 +3,7 @@ const request = require("request-promise");
 async function getIssue(domain, id) {
 	const res = await request({
 			method: "GET",
-			uri: `https://tangem.atlassian.net/rest/agile/1.0/issue/MM-1`,
+			uri: `https://tangem.atlassian.net/rest/agile/1.0/issue/CSS-176`,
 			headers: {
 				Accept: "application/json",
 			},
