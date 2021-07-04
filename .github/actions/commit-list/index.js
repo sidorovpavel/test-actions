@@ -32,6 +32,9 @@ async function run() {
 			return issues;
 		}, []);
 		console.log(issues);
+		console.log(issues.fields);
+		console.log(issues.fields.versions);
+		console.log(issues.fields.fixVersions);
 
 		const domain = core.getInput("jira-domain");
 		const d = await getIssue(domain, issues[0]);
