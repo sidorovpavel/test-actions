@@ -8,7 +8,7 @@ async function getIssue(domain, id) {
 				Accept: "application/json",
 			},
 			authorization: {
-				Basic: btoa('psidorov@tangim.com' + ":" + 'G9BzF6RS23GieYa4Afca0987'),
+				Basic: Buffer.from('psidorov@tangim.com' + ":" + 'G9BzF6RS23GieYa4Afca0987').toString('base64'),
 			},
 		json: true
 	});
