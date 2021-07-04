@@ -17,9 +17,6 @@ inputs:
   jira-token:
     required: true
     description: "Token for Jira"
-  jira-project:
-    required: true
-    description: "Jira project"
   jira-domain:
     required: true
     description: "Jira domain"

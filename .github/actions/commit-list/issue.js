@@ -7,9 +7,6 @@ async function getIssue(domain, id) {
 			headers: {
 				Accept: "application/json",
 			},
-			authorization: {
-				Basic: Buffer.from('psidorov@tangem.com' + ":" + 'G9BzF6RS23GieYa4Afca0987').toString('base64'),
-			},
 			auth: {
 				'user': 'psidorov@tangem.com',
 				'pass': 'G9BzF6RS23GieYa4Afca0987'
