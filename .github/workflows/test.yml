@@ -26,4 +26,5 @@ jobs:
         with:
           repo-token: ${{secrets.TOKEN}}
           jira-token: ${{secrets.JIRA_TOKEN}}
-          jira-project: ${{secrets.JIRA_PROJECT}}
+          jira-domain: ${{secrets.JIRA_DOMAIN}}
+          jira-user: ${{secrets.JIRA_USER}}
