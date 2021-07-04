@@ -31,14 +31,13 @@ async function run() {
 			})
 			return issues;
 		}, []);
-		console.log(issues);
-		console.log(issues.fields);
-		console.log(issues.fields.versions);
-		console.log(issues.fields.fixVersions);
 
 		const domain = core.getInput("jira-domain");
 		const d = await getIssue(domain, issues[0]);
 		console.log(d);
+		console.log(d.fields);
+		console.log(d.fields.versions);
+		console.log(d.fields.fixVersions);
 		// octokit.request
 
 		// const jokeBody = core.getInput("joke");
