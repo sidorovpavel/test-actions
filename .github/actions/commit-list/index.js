@@ -1,5 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
+const getIssue = require("./issue");
 
 async function run() {
 	try {
@@ -29,6 +30,9 @@ async function run() {
 		}, []);
 		console.log(issues);
 
+		const domain = core.getInput("jira-domain");
+		const d = await getIssue(domain, issues[0]);
+		console.log(d);
 		// octokit.request
 
 		// const jokeBody = core.getInput("joke");

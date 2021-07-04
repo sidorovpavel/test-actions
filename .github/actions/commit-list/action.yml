@@ -20,6 +20,9 @@ inputs:
   jira-project:
     required: true
     description: "Jira project"
+  jira-domain:
+    required: true
+    description: "Jira domain"
 
 runs:
   using: "node12"
