@@ -20,6 +20,9 @@ async function run() {
 		const jira_matcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
 		const issues = response.data.reduce((issues, item) => {
 			const names = item.commit.message.split("").reverse().join("").match(jira_matcher);
+			if (!names) {
+				return issues;
+			}
 			names.forEach(res => {
 				const id = res.split("").reverse().join("");
 				if(issues.indexOf(id)===-1) {
