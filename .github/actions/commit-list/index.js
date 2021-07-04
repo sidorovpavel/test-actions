@@ -1,6 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const getIssue = require("./issue");
+const connectJira = require("./jira");
 
 async function run() {
 	try {
@@ -33,7 +33,11 @@ async function run() {
 		}, []);
 
 		const domain = core.getInput("jira-domain");
-		const d = await getIssue(domain, issues[0]);
+		const user = core.getInput("jira-user");
+		const pass = core.getInput("jira-token");
+		const jira = connectJira(domain, user, pass);
+
+		const d = await jira.getIssue(issues[0]);
 		console.log(d);
 		console.log(d.fields);
 		console.log(d.fields.versions);
