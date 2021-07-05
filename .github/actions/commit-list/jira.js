@@ -17,7 +17,7 @@ function connectJira(domain, user, token) {
 	}
 
 	return {
-		getIssue: async (id) => await request(body(`issue/${id}`)),
+		getIssue: async (id) => await request(body(`issue/${id}/?fields=issuetype,summary`)),
 		getIssueTypes: async () => await request(body('issuetype')),
 	}
 }
