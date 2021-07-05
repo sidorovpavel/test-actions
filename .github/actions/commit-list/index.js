@@ -36,8 +36,6 @@ async function run() {
 		const user = core.getInput("jira-user");
 		const pass = core.getInput("jira-token");
 		const jira = connectJira(domain, user, pass);
-    console.log(issues);
-    console.log(jira);
 		const d = await jira.getIssue(issues[0]);
 		console.log(d);
 		console.log(d.fields);
