@@ -25,10 +25,10 @@ async function run() {
 		console.log(jira);
 
 		const jiraIssues = new Map();
-		issues.forEach(key => {
-			const issue = jira.getIssue(key);
+		for (const key of issues) {
+			const issue = await jira.getIssue(key);
 			jiraIssues.set(key, issue);
-		});
+		}
 
 	} catch (err) {
 		core.setFailed(err.message);
