@@ -28,9 +28,6 @@ async function run() {
 			jiraIssues.set(key, issue);
 		});
 
-		const issueTypes = jira.getIssueTypes();
-
-
 	} catch (err) {
 		core.setFailed(err.message);
 	}
