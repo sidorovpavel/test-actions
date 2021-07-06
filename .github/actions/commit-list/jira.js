@@ -31,8 +31,8 @@ async function connectJira(domain, user, token) {
 
 	return {
 		getIssue: async (id) => {
-			const response = await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
-			return mapIssue(response);
+			return await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
+			//return mapIssue(response);
 		},
 	};
 }
