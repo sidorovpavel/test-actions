@@ -16,9 +16,24 @@ function connectJira(domain, user, token) {
 		}
 	}
 
+	const mapIssue = (response) => {
+		return response;
+	}
+
+	const mapIssueTypes = (response) => {
+		console.log(response);
+		return response;
+	}
+
 	return {
-		getIssue: async (id) => await request(body(`issue/${id}/?fields=issuetype.untranslatedName,summary`)),
-		getIssueTypes: async () => await request(body('issuetype')),
+		getIssue: async (id) => {
+			const response = await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
+			return mapIssue(response);
+		},
+		getIssueTypes: async () => {
+			const response = await request(body('issuetype'));
+			return mapIssueTypes(response);
+		},
 	}
 }
 
