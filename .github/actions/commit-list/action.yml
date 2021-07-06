@@ -23,6 +23,9 @@ inputs:
   jira-user:
     required: true
     description: "Jira user"
+  realease-version:
+    required: true
+    description: "Version of release"
 
 runs:
   using: "node12"
