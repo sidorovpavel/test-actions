@@ -22,7 +22,7 @@ async function run() {
 		const issues = response.data.reduce(reduceIssues, []);
 
 		const jira = connectJira(domain, user, pass);
-		console.log(jira);
+		console.log(jira.getIssue);
 
 		const issue = await jira.getIssue('MM-1');
 		console.log(issue);
