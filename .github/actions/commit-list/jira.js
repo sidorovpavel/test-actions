@@ -32,11 +32,10 @@ function connectJira(domain, user, token) {
 
 	return {
 		getIssues: async (arr) => {
-			const types = await request(body('issuetype', false));
 			const promises = arr.map(async (item) => {
 				return getIssue(item);
 			});
-			const results = await Promise.all(promises);
+			const results = await Promise.all(promises.push(request(body('issuetype', false))));
 			console.log(results);
 		}
 	};
