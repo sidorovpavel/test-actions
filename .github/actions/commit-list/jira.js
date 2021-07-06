@@ -4,7 +4,7 @@ async function connectJira(domain, user, token) {
 	const body = (command) => {
 		return {
 			method: "GET",
-			uri: `https://${domain}.atlassian.net/rest/agile/1.0/${command}`,
+			uri: `https://${domain}.atlassian.net/rest/api/2/${command}`,
 			headers: {
 				Accept: "application/json",
 			},
