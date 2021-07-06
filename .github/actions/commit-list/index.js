@@ -24,12 +24,15 @@ async function run() {
 		const jira = connectJira(domain, user, pass);
 		console.log(jira);
 
-		const jiraIssues = new Map();
-		for (const key of issues) {
-			console.log(key);
-			const issue = await jira.getIssue(key);
-			jiraIssues.set(key, issue);
-		}
+		const issue = await jira.getIssue('MM-1');
+		console.log(issue);
+		//const jiraIssues = new Map();
+
+		// for (const key of issues) {
+		// 	console.log(key);
+		// 	const issue = await jira.getIssue(key);
+		// 	jiraIssues.set(key, issue);
+		// }
 
 	} catch (err) {
 		core.setFailed(err.message);
