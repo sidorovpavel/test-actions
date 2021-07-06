@@ -27,7 +27,7 @@ async function connectJira(domain, user, token) {
 			key,
 			issueType: fields.issueType,
 		};
-	}
+	};
 
 	return {
 		getIssue: async (id) => {
