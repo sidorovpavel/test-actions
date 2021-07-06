@@ -1,6 +1,6 @@
 const request = require("request-promise");
 
-async function connectJira(domain, user, token) {
+function connectJira(domain, user, token) {
 	const body = (command, isAgile = true) => {
 		return {
 			method: "GET",
@@ -15,24 +15,24 @@ async function connectJira(domain, user, token) {
 			json: true
 		}
 	};
-	// let issueTypes = undefined;
-	//
-	// const mapIssue = async ({key, fields}) => {
-	// 	if (issueTypes === undefined) {
-	// 		issueTypes = await request(body('issuetypes', false));
-	// 		console.log(issueTypes);
-	// 	}
-	// 	return {
-	// 		url: `https://${domain}.atlassian.net/browse/${key}`,
-	// 		key,
-	// 		issueType: fields.issueType,
-	// 	};
-	// };
+	let issueTypes = undefined;
+
+	const mapIssue = async ({key, fields}) => {
+		if (issueTypes === undefined) {
+			issueTypes = await request(body('issuetypes', false));
+			console.log(issueTypes);
+		}
+		return {
+			url: `https://${domain}.atlassian.net/browse/${key}`,
+			key,
+			issueType: fields.issueType,
+		};
+	};
 
 	return {
 		getIssue: async (id) => {
-			return await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
-			//return mapIssue(response);
+			const response = await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
+			return mapIssue(response);
 		},
 	};
 }
