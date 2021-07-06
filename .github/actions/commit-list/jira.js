@@ -1,10 +1,10 @@
 const request = require("request-promise");
 
 async function connectJira(domain, user, token) {
-	const body = (command) => {
+	const body = (command, isAgile = true) => {
 		return {
 			method: "GET",
-			uri: `https://${domain}.atlassian.net/rest/api/2/${command}`,
+			uri: `https://${domain}.atlassian.net/rest/${isAgile ? 'agile/1.0' : 'api/2'}/${command}`,
 			headers: {
 				Accept: "application/json",
 			},
@@ -15,11 +15,13 @@ async function connectJira(domain, user, token) {
 			json: true
 		}
 	};
+	let issueTypes = undefined;
 
-	const issueTypes =  await request(body('issuetype'));
-	console.log(issueTypes);
-
-	const mapIssue = ({key, fields}) => {
+	const mapIssue = async ({key, fields}) => {
+		if (issueTypes === undefined) {
+			issueTypes = await request(body('issuetypes', false));
+			console.log(issueTypes);
+		}
 		return {
 			url: `https://${domain}.atlassian.net/browse/${key}`,
 			key,
