@@ -1,8 +1,9 @@
-import {reduceIssues} from "./utils";
+
 
 const core = require("@actions/core");
 const github = require("@actions/github");
 const connectJira = require("./jira");
+const reduceIssues = require("./reduceIssues");
 
 async function run() {
 	try {
