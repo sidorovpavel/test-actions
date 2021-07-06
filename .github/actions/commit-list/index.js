@@ -1,5 +1,3 @@
-
-
 const core = require("@actions/core");
 const github = require("@actions/github");
 const connectJira = require("./jira");
@@ -30,6 +28,7 @@ async function run() {
 			jiraIssues.set(key, issue);
 		});
 
+		const issueTypes = jira.getIssueTypes();
 
 
 	} catch (err) {

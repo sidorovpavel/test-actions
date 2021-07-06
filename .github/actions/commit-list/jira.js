@@ -1,6 +1,6 @@
 const request = require("request-promise");
 
-function connectJira(domain, user, token) {
+async function connectJira(domain, user, token) {
 	const body = (command) => {
 		return {
 			method: "GET",
@@ -14,15 +14,17 @@ function connectJira(domain, user, token) {
 			},
 			json: true
 		}
-	}
+	};
 
-	const mapIssue = (response) => {
-		return response;
-	}
+	const issueTypes =  await request(body('issuetype'));
+	console.log(issueTypes);
 
-	const mapIssueTypes = (response) => {
-		console.log(response);
-		return response;
+	const mapIssue = ({key, fields}) => {
+		return {
+			url: `https://${domain}.atlassian.net/browse/${key}`,
+			key,
+			issueType: fields.issueType,
+		};
 	}
 
 	return {
@@ -30,11 +32,7 @@ function connectJira(domain, user, token) {
 			const response = await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
 			return mapIssue(response);
 		},
-		getIssueTypes: async () => {
-			const response = await request(body('issuetype'));
-			return mapIssueTypes(response);
-		},
-	}
+	};
 }
 
 module.exports = connectJira;
