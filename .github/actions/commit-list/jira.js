@@ -15,19 +15,19 @@ async function connectJira(domain, user, token) {
 			json: true
 		}
 	};
-	let issueTypes = undefined;
-
-	const mapIssue = async ({key, fields}) => {
-		if (issueTypes === undefined) {
-			issueTypes = await request(body('issuetypes', false));
-			console.log(issueTypes);
-		}
-		return {
-			url: `https://${domain}.atlassian.net/browse/${key}`,
-			key,
-			issueType: fields.issueType,
-		};
-	};
+	// let issueTypes = undefined;
+	//
+	// const mapIssue = async ({key, fields}) => {
+	// 	if (issueTypes === undefined) {
+	// 		issueTypes = await request(body('issuetypes', false));
+	// 		console.log(issueTypes);
+	// 	}
+	// 	return {
+	// 		url: `https://${domain}.atlassian.net/browse/${key}`,
+	// 		key,
+	// 		issueType: fields.issueType,
+	// 	};
+	// };
 
 	return {
 		getIssue: async (id) => {
