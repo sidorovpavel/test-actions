@@ -22,10 +22,9 @@ async function run() {
 		const issues = response.data.reduce(reduceIssues, []);
 
 		const jira = connectJira(domain, user, pass);
-		console.log(jira.getIssue);
 
-		const issue = await jira.getIssue('MM-1');
-		console.log(issue);
+		const jiraIssues = await jira.getIssues(issues);
+		console.log(jiraIssues);
 		//const jiraIssues = new Map();
 
 		// for (const key of issues) {

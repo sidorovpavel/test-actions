@@ -18,10 +18,6 @@ function connectJira(domain, user, token) {
 	let issueTypes = undefined;
 
 	const mapIssue = async ({key, fields}) => {
-		if (issueTypes === undefined) {
-			issueTypes = await request(body('issuetypes', false));
-			console.log(issueTypes);
-		}
 		return {
 			url: `https://${domain}.atlassian.net/browse/${key}`,
 			key,
@@ -29,11 +25,19 @@ function connectJira(domain, user, token) {
 		};
 	};
 
+	const getIssue = async (id) => {
+		const response = await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
+		return mapIssue(response);
+	};
+
 	return {
-		getIssue: async (id) => {
-			const response = await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
-			return mapIssue(response);
-		},
+		getIssues: async (arr) => {
+			const types = await request(body('issuetype', false));
+			const results = await Promise.map(arr, async (item) => {
+				return getIssue(item);
+			});
+			console.log(results);
+		}
 	};
 }
 
