@@ -23,7 +23,7 @@ inputs:
   jira-user:
     required: true
     description: "Jira user"
-  realease-version:
+  release-version:
     required: true
     description: "Version of release"
   project-name:
