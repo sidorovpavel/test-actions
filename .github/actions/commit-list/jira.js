@@ -15,7 +15,7 @@ function connectJira(domain, user, token, projectName) {
 
   const getRequest = (command) => {
 	  return {
-		  method: "PUT",
+		  method: "GET",
 		  uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
 		  ...baseQuery,
 	  }
@@ -26,6 +26,9 @@ function connectJira(domain, user, token, projectName) {
 			method: "POST",
 			uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
 			body: bodyData,
+			headers: {
+				contentType: 'application/json'
+			},
 			...baseQuery,
 		}
 	}
