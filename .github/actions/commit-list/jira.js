@@ -36,7 +36,7 @@ function connectJira(domain, user, token) {
 
 	return {
 		getIssues: async (arr) => {
-			const types = new Promise(getIssueType);
+			const types = new Promise(() => getIssueType());
 
 			const promises = arr.map(async (item) => {
 				return getIssue(item);
