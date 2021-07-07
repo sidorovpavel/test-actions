@@ -21,7 +21,7 @@ function connectJira(domain, user, token) {
 		return {
 			url: `https://${domain}.atlassian.net/browse/${key}`,
 			key,
-			issueType: fields.issuetype.id,
+			issueTypeId: fields.issuetype.id,
 			summary: fields.summary,
 			existFixVersions: fields.fixVersions.length > 0
 		};
@@ -30,7 +30,7 @@ function connectJira(domain, user, token) {
 	const mapIssueType = (response) => {
 		const types = new Map();
 		response.forEach(item => {
-			const {name} = item;
+			const { untranslatedName: name} = item;
 			types.set(item.id, { name });
 		});
 		return types;
@@ -53,15 +53,21 @@ function connectJira(domain, user, token) {
 				resolve(types);
 			});
 
-			const issuePromises = arr.map(async (item) => {
+			let issuePromises = arr.map(async (item) => {
 				return getIssue(item);
 			});
 			const [types, ...issues] = await Promise.all([typePromise, ...issuePromises]);
-			const result = issues.reduce((acc, item) => {
 
-			}, []);
-      console.log(issues);
-			return issues;
+			const sortArray = ['Bug', 'Improvement', 'New feature'];
+
+			return issues
+				.map(item => {
+					return { ...item, issueType: types.get(item.issueTypeId).name };
+				})
+				.filter(item => {
+					return item.issueType.toLowerCase() !== 'bug' || !item.existFixVersions
+				})
+				.sort((a, b) => sortArray.indexOf(b.issueType) - sortArray.indexOf(a.issueType));
 		}
 	};
 }

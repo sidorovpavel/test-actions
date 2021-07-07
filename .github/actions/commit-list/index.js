@@ -25,7 +25,7 @@ async function run() {
 
 		const jiraIssues = await jira.getIssues(issues);
 
-		//const jiraIssues = new Map();
+		console.log(jiraIssues);
 
 		// for (const key of issues) {
 		// 	console.log(key);
