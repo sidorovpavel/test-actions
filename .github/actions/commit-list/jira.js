@@ -1,21 +1,34 @@
 const request = require("request-promise");
 
 function connectJira(domain, user, token, projectName) {
-	const body = (command, isAgile = true) => {
+
+ 	const baseQuery = {
+	  headers: {
+		  Accept: "application/json",
+	  },
+	  auth: {
+		  user,
+		  pass: token,
+	  },
+	  json: true,
+  }
+
+  const getRequest = (command) => {
+	  return {
+		  method: "PUT",
+		  uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
+		  ...baseQuery,
+	  }
+	}
+
+	const postRequest = (command, bodyData) => {
 		return {
-			method: "GET",
+			method: "POST",
 			uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
-			headers: {
-				Accept: "application/json",
-			},
-			auth: {
-				user,
-				pass: token,
-			},
-			json: true
+			body: bodyData,
+			...baseQuery,
 		}
-	};
-	let issueTypes = undefined;
+	}
 
 	const mapIssue = async ({key, fields}) => {
 		return {
@@ -37,12 +50,12 @@ function connectJira(domain, user, token, projectName) {
 	}
 
 	const getIssue = async (id) => {
-		const response = await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
+		const response = await request(getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`));
 		return mapIssue(response);
 	};
 
 	const getIssueType = async () => {
-		const types = await request(body('issuetype', false));
+		const types = await request(getRequest('issuetype'));
 		return mapIssueType(types);
 	};
 
@@ -68,6 +81,20 @@ function connectJira(domain, user, token, projectName) {
 					return item.issueType.toLowerCase() !== 'bug' || !item.existFixVersions
 				})
 				.sort((a, b) => sortArray.indexOf(b.issueType) - sortArray.indexOf(a.issueType));
+		},
+		createVersion: async (project, version) => {
+			const bodyData = `{
+			  "archived": false,
+			  "releaseDate": "2010-07-06",
+			  "name": "New Version 1",
+			  "description": "An excellent version",
+			  "projectId": 10036,
+			  "released": true
+			}`;
+
+			const res = await postRequest(`project/${project}`, bodyData);
+			console.log(res);
+			return res;
 		}
 	};
 }

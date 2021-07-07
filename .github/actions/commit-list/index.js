@@ -29,8 +29,9 @@ async function run() {
 
 		console.log(jiraIssues);
 
+		const res = jira.createVersion(projectName, releaseVersion);
 
-
+		console.log(res);
 		// for (const key of issues) {
 		// 	console.log(key);
 		// 	const issue = await jira.getIssue(key);
