@@ -26,6 +26,9 @@ inputs:
   realease-version:
     required: true
     description: "Version of release"
+  project-name:
+    required: true
+    description: "Alias of Project"
 
 runs:
   using: "node12"

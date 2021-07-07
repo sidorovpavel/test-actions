@@ -9,6 +9,8 @@ async function run() {
 		const domain = core.getInput("jira-domain");
 		const user = core.getInput("jira-user");
 		const pass = core.getInput("jira-token");
+		const projectName = core.getInput("project-name");
+		const releaseVersion = core.getInput("release-version");
 
 		const { repository, pull_request } = github.context.payload;
 		const octokit = github.getOctokit(token);
@@ -21,11 +23,13 @@ async function run() {
 
 		const issues = response.data.reduce(reduceIssues, []);
 
-		const jira = connectJira(domain, user, pass);
+		const jira = connectJira(domain, user, pass, projectName);
 
 		const jiraIssues = await jira.getIssues(issues);
 
 		console.log(jiraIssues);
+
+
 
 		// for (const key of issues) {
 		// 	console.log(key);

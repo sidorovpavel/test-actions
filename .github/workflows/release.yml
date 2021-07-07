@@ -27,4 +27,5 @@ jobs:
           jira-token: ${{secrets.JIRA_TOKEN}}
           jira-user: ${{secrets.JIRA_USER}}
           jira-domain: 'tangem'
-          realease-version: 'test'
+          release-version: 'test'
+          project-name: 'MM'

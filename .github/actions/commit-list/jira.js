@@ -1,10 +1,10 @@
 const request = require("request-promise");
 
-function connectJira(domain, user, token) {
+function connectJira(domain, user, token, projectName) {
 	const body = (command, isAgile = true) => {
 		return {
 			method: "GET",
-			uri: `https://${domain}.atlassian.net/rest/${isAgile ? 'agile/1.0' : 'api/2'}/${command}`,
+			uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
 			headers: {
 				Accept: "application/json",
 			},
