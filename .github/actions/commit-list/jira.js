@@ -21,9 +21,20 @@ function connectJira(domain, user, token) {
 		return {
 			url: `https://${domain}.atlassian.net/browse/${key}`,
 			key,
-			issueType: fields.issueType,
+			issueType: fields.issuetype.id,
+			summary: fields.summary,
+			existFixVersions: fields.fixVersions.length > 0
 		};
 	};
+
+	const mapIssueType = (response) => {
+		const types = new Map();
+		response.forEach(item => {
+			const {name} = item;
+			types.set(item.id, { name });
+		});
+		return types;
+	}
 
 	const getIssue = async (id) => {
 		const response = await request(body(`issue/${id}/?fields=issuetype,summary,fixVersions`));
@@ -31,8 +42,9 @@ function connectJira(domain, user, token) {
 	};
 
 	const getIssueType = async () => {
-		return await request(body('issuetype', false));
-	}
+		const types = await request(body('issuetype', false));
+		return mapIssueType(types);
+	};
 
 	return {
 		getIssues: async (arr) => {
@@ -45,6 +57,9 @@ function connectJira(domain, user, token) {
 				return getIssue(item);
 			});
 			const [types, ...issues] = await Promise.all([typePromise, ...issuePromises]);
+			const result = issues.reduce((acc, item) => {
+
+			}, []);
       console.log(issues);
 			return issues;
 		}
