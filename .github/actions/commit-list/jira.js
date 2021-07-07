@@ -95,9 +95,7 @@ function connectJira(domain, user, token, projectName) {
 			  "released": true
 			}`;
 
-			const res = await postRequest(`project/${project}`, bodyData);
-			console.log(res);
-			return res;
+			return await request(postRequest(`project/${project}`, bodyData));
 		}
 	};
 }
