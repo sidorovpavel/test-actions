@@ -42,7 +42,8 @@ function connectJira(domain, user, token) {
 				return getIssue(item);
 			});
 			const results = await Promise.all([types, ...promises]);
-			console.log(results);
+
+			return results;
 		}
 	};
 }
