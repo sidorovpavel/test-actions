@@ -95,7 +95,7 @@ function connectJira(domain, user, token, projectName) {
 			  "released": true
 			}`;
 
-			return await request(postRequest(`project/${project}`, bodyData));
+			return await request(postRequest(`/version`, bodyData));
 		}
 	};
 }
