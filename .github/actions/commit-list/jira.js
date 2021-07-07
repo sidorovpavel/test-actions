@@ -86,16 +86,18 @@ function connectJira(domain, user, token, projectName) {
 				.sort((a, b) => sortArray.indexOf(b.issueType) - sortArray.indexOf(a.issueType));
 		},
 		createVersion: async (project, version) => {
-			const bodyData = `{
-			  "archived": false,
-			  "releaseDate": "2010-07-06",
-			  "name": "New Version 1",
-			  "description": "An excellent version",
-			  "projectId": 10036,
-			  "released": true
-			}`;
+			const bodyData = {
+			  archived: false,
+			  releaseDate: "2010-07-06",
+			  name: "New Version 1",
+			  description: "An excellent version",
+			  projectId: 10036,
+			  released: true
+			};
 
-			return await request(postRequest(`/version`, bodyData));
+			const body = postRequest(`/version`, bodyData);
+			console.log(body);
+			return await request(body);
 		}
 	};
 }
