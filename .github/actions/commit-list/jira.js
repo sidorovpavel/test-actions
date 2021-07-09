@@ -73,8 +73,10 @@ function connectJira(domain, user, token, projectName) {
 
 	const getOrCreateVersion = async (versionName) => {
 		const version = await findProjectVersionByName(projectName, versionName);
+		console.log(version);
 		if (!version) {
 			const projectId = await getProjectId();
+			console .log(projectId);
 			return await createVersion(projectId, versionName)
 		}
 		return version;
@@ -114,6 +116,7 @@ function connectJira(domain, user, token, projectName) {
 
 		setVersionToIssues: async (versionName, issues) => {
 			const version = await getOrCreateVersion(versionName);
+			console.log(version);
 			return setVersionToIssues(version, issues);
 		},
 	};
