@@ -4,7 +4,8 @@ const moment = require("moment");
 function connectJira(domain, user, token, projectName) {
 
  	const execCommand = async (command, body) => {
-	  const baseQuery = {
+	  return await request({
+		  uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
 		  headers: {
 			  Accept: "application/json",
 		  },
@@ -13,22 +14,18 @@ function connectJira(domain, user, token, projectName) {
 			  pass: token,
 		  },
 		  json: true,
-	  };
-
-	  return await request({
-		  uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
-		  ...baseQuery,
 		  ...body,
 	  });
-  }
+  };
 
   const getRequest = async (command) => await execCommand(command, {method: "GET"});
-  const setRequest = async (command, bodyData, isUpdate = false) => await execCommand(command,
+  const setRequest = async (command, bodyData, isUpdate = false) =>
+	  await execCommand(command,
 	  {
 	  	method: isUpdate ? "PUT" : "POST",
 		  headers: {
 			  Accept: "application/json",
-			  contentType: 'application/json'
+			  contentType: "application/json"
 		  },
 		  body: bodyData,
 	  }
@@ -82,11 +79,13 @@ function connectJira(domain, user, token, projectName) {
 		return version;
 	};
 
-	const issueSetVersion = async ({ key }, version) =>
-		setRequest(`issue/${key}`,
-			{update: {fixVersions:[{ set: [{ id: version.toString() }] }]} },
+	const issueSetVersion = async ({ key }, version) => {
+		console.log(key, version);
+		console.log({ set: [{ id: version }] });
+	  return setRequest(`issue/${key}`,
+			{update: {fixVersions:[{ set: [{ id: version }] }]} },
 		true
-		);
+		)};
 
 	const setVersionToIssues = async (version, issues) => {
 		return await Promise.all([
