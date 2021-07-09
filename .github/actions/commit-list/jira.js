@@ -1,4 +1,5 @@
 const request = require("request-promise");
+const moment = request("moment");
 
 function connectJira(domain, user, token, projectName) {
 
@@ -60,18 +61,15 @@ function connectJira(domain, user, token, projectName) {
 		(await getRequest(`project/${projectName}/versions`))
 			.find(item => item.name === version);
 
-	const createVersion = async (projectId, version) => {
-		const now = new Date();
-		const bodyData = {
-			archived: false,
-			releaseDate: now.format("yyyy-mm-dd"),
-			name: version,
-			projectId: projectId,
-			released: true
-		};
-
-		return await postRequest(`/version`, bodyData);
-	};
+	const createVersion = async (projectId, version) =>
+		await postRequest(`/version`,
+			{
+				archived: false,
+				releaseDate: moment().format("yyyy-mm-dd"),
+				name: version,
+				projectId: projectId,
+				released: true
+			});
 
 	const getOrCreateVersion = async (versionName) => {
 		const version = await findProjectVersionByName(projectName, versionName);

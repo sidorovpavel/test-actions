@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/sidorovpavel/test-actions/issues"
   },
-  "homepage": "https://github.com/sidorovpavel/test-actions#readme"
+  "homepage": "https://github.com/sidorovpavel/test-actions#readme",
+  "dependencies": {
+    "moment": "^2.29.1"
+  }
 }
