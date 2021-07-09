@@ -29,17 +29,9 @@ async function run() {
 
 		console.log(jiraIssues);
 
-		jira.getOrCreateVersion((projectName, releaseVersion);
-
-		//const res = jira.createVersion(projectName, releaseVersion);
+		const res = await jira.setVersionToIssues(releaseVersion, jiraIssues);
 
 		console.log(res);
-		// for (const key of issues) {
-		// 	console.log(key);
-		// 	const issue = await jira.getIssue(key);
-		// 	jiraIssues.set(key, issue);
-		// }
-
 	} catch (err) {
 		core.setFailed(err.message);
 	}
