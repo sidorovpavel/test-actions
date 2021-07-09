@@ -74,11 +74,9 @@ function connectJira(domain, user, token, projectName) {
 			});
 
 	const getOrCreateVersion = async (versionName) => {
-		const version = await findProjectVersionByName(projectName, versionName);
-		console.log(version);
+		const version = await findProjectVersionByName(versionName);
 		if (!version) {
 			const projectId = await getProjectId();
-			console.log(projectId);
 			return await createVersion(projectId, versionName)
 		}
 		return version;
