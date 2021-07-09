@@ -50,13 +50,16 @@ function connectJira(domain, user, token, projectName) {
 		return types;
 	}
 
-	const getIssue = (id) => mapIssue(getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`));
-	const getIssueType = () => mapIssueType(getRequest('issuetype'));
-	const getProjectId = () => getRequest(`project/${projectName}`).id;
-	const findProjectVersionByName = (version) =>
-		getRequest(`project/${projectName}/versions`).find(item => item.name === version);
+	const getIssue = async (id) => mapIssue(await getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`));
+	const getIssueType = async () => mapIssueType(await getRequest('issuetype'));
+	const getProjectId = async () => {
+		const response = await getRequest(`project/${projectName}`);
+		return response.id;
+	}
+	const findProjectVersionByName = async (version) =>
+		await getRequest(`project/${projectName}/versions`).find(item => item.name === version);
 
-	const createVersion = (projectId, version) => {
+	const createVersion = async (projectId, version) => {
 		const now = new Date();
 		const bodyData = {
 			archived: false,
@@ -66,14 +69,14 @@ function connectJira(domain, user, token, projectName) {
 			released: true
 		};
 
-		return  postRequest(`/version`, bodyData);
+		return await postRequest(`/version`, bodyData);
 	};
 
-	const getOrCreateVersion = (versionName) => {
-		const version = findProjectVersionByName(projectName, versionName);
+	const getOrCreateVersion = async (versionName) => {
+		const version = await findProjectVersionByName(projectName, versionName);
 		if (!version) {
-			const projectId = getProjectId();
-			return  createVersion(projectId, versionName)
+			const projectId = await getProjectId();
+			return await createVersion(projectId, versionName)
 		}
 		return version;
 	};
@@ -90,8 +93,7 @@ function connectJira(domain, user, token, projectName) {
 	return {
 		getIssues: async (arr) => {
 			const typePromise = new Promise((resolve) => {
-				const types = getIssueType();
-				resolve(types);
+				resolve(getIssueType());
 			});
 
 			const [types, ...issues] = await Promise.all([
