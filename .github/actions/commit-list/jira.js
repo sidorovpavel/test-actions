@@ -11,18 +11,17 @@ function connectJira(domain, user, token, projectName) {
 		  pass: token,
 	  },
 	  json: true,
-  }
+  };
 
-  const getRequest = (command) => {
-	  return {
+  const getRequest = async (command) =>
+	  await request({
 		  method: "GET",
 		  uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
 		  ...baseQuery,
-	  }
-	}
+	  });
 
-	const postRequest = (command, bodyData) => {
-		return {
+	const postRequest = async (command, bodyData) =>
+		await request({
 			method: "POST",
 			uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
 			body: bodyData,
@@ -30,12 +29,11 @@ function connectJira(domain, user, token, projectName) {
 				contentType: 'application/json'
 			},
 			...baseQuery,
-		}
-	}
+		});
 
 	const mapIssue = async ({key, fields}) => {
 		return {
-			url: `https://${domain}.atlassian.net/browse/${key}`,
+			uri: `https://${domain}.atlassian.net/browse/${key}`,
 			key,
 			issueTypeId: fields.issuetype.id,
 			summary: fields.summary,
@@ -52,14 +50,41 @@ function connectJira(domain, user, token, projectName) {
 		return types;
 	}
 
-	const getIssue = async (id) => {
-		const response = await request(getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`));
-		return mapIssue(response);
+	const getIssue = (id) => mapIssue(getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`));
+	const getIssueType = () => mapIssueType(getRequest('issuetype'));
+	const getProjectId = () => getRequest(`project/${projectName}`).id;
+	const findProjectVersionByName = (version) =>
+		getRequest(`project/${projectName}/versions`).find(item => item.name === version);
+
+	const createVersion = (projectId, version) => {
+		const now = new Date();
+		const bodyData = {
+			archived: false,
+			releaseDate: now.format("yyyy-mm-dd"),
+			name: version,
+			projectId: projectId,
+			released: true
+		};
+
+		return  postRequest(`/version`, bodyData);
 	};
 
-	const getIssueType = async () => {
-		const types = await request(getRequest('issuetype'));
-		return mapIssueType(types);
+	const getOrCreateVersion = (versionName) => {
+		const version = findProjectVersionByName(projectName, versionName);
+		if (!version) {
+			const projectId = getProjectId();
+			return  createVersion(projectId, versionName)
+		}
+		return version;
+	};
+
+	const issueSetVersion = async ({key}, version) =>
+		postRequest(`/issue/${key}`, {update: {fixVersions:[{ set: [{ id: version }] }]} });
+
+	const setVersionToIssues = async (version, issues) => {
+		return await Promise.all([
+			...issues.map(async item => issueSetVersion(item, version))
+		]);
 	};
 
 	return {
@@ -69,10 +94,10 @@ function connectJira(domain, user, token, projectName) {
 				resolve(types);
 			});
 
-			let issuePromises = arr.map(async (item) => {
-				return getIssue(item);
-			});
-			const [types, ...issues] = await Promise.all([typePromise, ...issuePromises]);
+			const [types, ...issues] = await Promise.all([
+				typePromise,
+				...arr.map(async item => getIssue(item))
+			]);
 
 			const sortArray = ['Bug', 'Improvement', 'New feature'];
 
@@ -85,20 +110,11 @@ function connectJira(domain, user, token, projectName) {
 				})
 				.sort((a, b) => sortArray.indexOf(b.issueType) - sortArray.indexOf(a.issueType));
 		},
-		createVersion: async (project, version) => {
-			const bodyData = {
-			  archived: false,
-			  releaseDate: "2010-07-06",
-			  name: "New Version 1",
-			  description: "An excellent version",
-			  projectId: 10036,
-			  released: true
-			};
 
-			const body = postRequest(`/version`, bodyData);
-			console.log(body);
-			return await request(body);
-		}
+		setVersionToIssues: async (versionName, issues) => {
+			const version = await getOrCreateVersion(versionName);
+			return setVersionToIssues(version, issues);
+		},
 	};
 }
 
