@@ -1,5 +1,5 @@
 const request = require("request-promise");
-const moment = request("moment");
+const moment = require("moment");
 
 function connectJira(domain, user, token, projectName) {
 
