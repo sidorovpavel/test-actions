@@ -79,11 +79,9 @@ function connectJira(domain, user, token, projectName) {
 		return version;
 	};
 
-	const issueSetVersion = async ({ key }, version) => {
-		console.log(key, version);
-		console.log({ set: [{ id: version }] });
+	const issueSetVersion = async ({ key }, { id }) => {
 	  return setRequest(`issue/${key}`,
-			{update: {fixVersions:[{ set: [{ id: version }] }]} },
+			{update: {fixVersions:[{ set: [{ id }] }]} },
 		true
 		)};
 
