@@ -65,7 +65,7 @@ function connectJira(domain, user, token, projectName) {
 		await postRequest(`/version`,
 			{
 				archived: false,
-				releaseDate: moment().format("yyyy-mm-dd"),
+				releaseDate: moment().format("YYYY-MM-DD"),
 				name: version,
 				projectId: projectId,
 				released: true
