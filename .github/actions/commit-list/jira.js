@@ -3,45 +3,36 @@ const moment = require("moment");
 
 function connectJira(domain, user, token, projectName) {
 
- 	const baseQuery = {
-	  headers: {
-		  Accept: "application/json",
-	  },
-	  auth: {
-		  user,
-		  pass: token,
-	  },
-	  json: true,
-  };
+ 	const execCommand = async (command, body) => {
+	  const baseQuery = {
+		  headers: {
+			  Accept: "application/json",
+		  },
+		  auth: {
+			  user,
+			  pass: token,
+		  },
+		  json: true,
+	  };
 
-  const getRequest = async (command) =>
-	  await request({
-		  method: "GET",
+	  return await request({
 		  uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
 		  ...baseQuery,
+		  ...body,
 	  });
+  }
 
-	const postRequest = async (command, bodyData) =>
-	{  console.log(bodyData);
-
-		console.log({
-			method: "PUT",
-			uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
-			body: bodyData,
-			headers: {
-				contentType: 'application/json'
-			},
-			...baseQuery,
-		});
-			return await request({
-			method: "POST",
-			uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
-			body: bodyData,
-			headers: {
-				contentType: 'application/json'
-			},
-			...baseQuery,
-		})};
+  const getRequest = async (command) => await execCommand(command, {method: "GET"});
+  const setRequest = async (command, bodyData, isUpdate = false) => await execCommand(command,
+	  {
+	  	method: isUpdate ? "PUT" : "POST",
+		  headers: {
+			  Accept: "application/json",
+			  contentType: 'application/json'
+		  },
+		  body: bodyData,
+	  }
+  );
 
 	const mapIssue = async ({key, fields}) => {
 		return {
@@ -73,7 +64,7 @@ function connectJira(domain, user, token, projectName) {
 			.find(item => item.name === version);
 
 	const createVersion = async (projectId, version) =>
-		await postRequest(`version`,
+		await setRequest(`version`,
 			{
 				archived: false,
 				releaseDate: moment().format("YYYY-MM-DD"),
@@ -92,8 +83,10 @@ function connectJira(domain, user, token, projectName) {
 	};
 
 	const issueSetVersion = async ({ key }, version) =>
-		postRequest(`issue/${key}`
-			, {update: {fixVersions:[{ set: [{ id: version }] }]} });
+		setRequest(`issue/${key}`,
+			{update: {fixVersions:[{ set: [{ id: version }] }]} },
+		true
+		);
 
 	const setVersionToIssues = async (version, issues) => {
 		return await Promise.all([
