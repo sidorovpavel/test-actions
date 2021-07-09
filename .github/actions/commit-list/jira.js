@@ -25,7 +25,7 @@ function connectJira(domain, user, token, projectName) {
 	{  console.log(bodyData);
 
 		console.log({
-			method: "POST",
+			method: "PUT",
 			uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
 			body: bodyData,
 			headers: {
