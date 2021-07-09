@@ -22,7 +22,7 @@ function connectJira(domain, user, token, projectName) {
 	  });
 
 	const postRequest = async (command, bodyData) =>
-		await request({
+	{ console.log({
 			method: "POST",
 			uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
 			body: bodyData,
@@ -31,6 +31,15 @@ function connectJira(domain, user, token, projectName) {
 			},
 			...baseQuery,
 		});
+			return await request({
+			method: "POST",
+			uri: `https://${domain}.atlassian.net/rest/api/3/${command}`,
+			body: bodyData,
+			headers: {
+				contentType: 'application/json'
+			},
+			...baseQuery,
+		})};
 
 	const mapIssue = async ({key, fields}) => {
 		return {
@@ -56,12 +65,10 @@ function connectJira(domain, user, token, projectName) {
 	const getProjectId = async () => {
 		const response = await getRequest(`project/${projectName}`);
 		return response.id;
-	}
-	const findProjectVersionByName = async (version) => {
-		const result = await getRequest(`project/${projectName}/versions`);
-		console.log(result, version);
-		return result.find(item => item.name === version)
 	};
+	const findProjectVersionByName = async (version) =>
+		(await getRequest(`project/${projectName}/versions`))
+			.find(item => item.name === version);
 
 	const createVersion = async (projectId, version) =>
 		await postRequest(`version`,
