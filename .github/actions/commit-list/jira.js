@@ -15,7 +15,7 @@ function connectJira(domain, user, token, projectName) {
 					"Authorization": `Basic ${AuthString}`,
 				},
 			});
-		return await res.json();
+		return res.json();
 	}
 
  	const setRequest = async (command, body, isUpdate = false) => {
@@ -29,7 +29,7 @@ function connectJira(domain, user, token, projectName) {
 			  },
 			  body,
 		  });
-	  return await res.json();
+	  return isUpdate ? res : res.json();
   };
 
 	const mapIssue = async ({ key, fields }) => {
