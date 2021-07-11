@@ -10,23 +10,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: View context attributes
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: get commits list
         uses: actions/github-script@v4
-        with:
-          script: console.log(context);
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-      # - run: npm ci
-      # - run: npm install moment
-      # - run: npm install node-fetch
-
-      - uses: actions/github-script@v4
         with:
           github-token: ${{secrets.TOKEN}}
           script: |
+            const commits = await github.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.pull_request.number,
+            });
+            const jira_matcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
+            const reduceIssues = (issues, item) => {
+              const names = item.commit.message.split("").reverse().join("").match(jira_matcher);
+              if (!names) {
+                return issues;
+              }
+              names.forEach(res => {
+                const id = res.split("").reverse().join("");
+                if(issues.indexOf(id)===-1) {
+                  issues.push(id)
+                }
+              })
+              return issues;
+            };
+            console.log(commits);
 
-            console.log(context);
+
