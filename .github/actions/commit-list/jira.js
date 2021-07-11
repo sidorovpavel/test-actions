@@ -3,26 +3,37 @@ const moment = require("moment");
 
 function connectJira(domain, user, token, projectName) {
 
- 	const execCommand = (command, body) => {
-	  return fetch(`https://${domain}.atlassian.net/rest/api/3/${command}`, {
-		  headers: {
-			  Accept: "application/json",
-			  Authorization: `Basic ${Buffer.from(`${user}:${token}`).toString('base64')}`,
-		  },
-		  ...body,
-	  });
+  const AuthString = Buffer.from(`${user}:${token}`).toString('base64');
+
+	async function getRequest(command){
+		const res = await fetch(
+			`https://${domain}.atlassian.net/rest/api/3/${command}`,
+			{
+				method: "GET",
+				headers: {
+					"Accept": "application/json",
+					"Authorization": `Basic ${AuthString}`,
+				},
+			});
+		return await res.json();
+	}
+
+ 	const setRequest = async (command, body, isUpdate = false) => {
+	  const res = await fetch(
+		  `https://${domain}.atlassian.net/rest/api/3/${command}`,
+		  {
+			  method: isUpdate ? "PUT" : "POST",
+			  headers: {
+				  "Accept": "application/json",
+				  "Authorization": `Basic ${AuthString}`,
+				  "Content-Type": "application/json"
+			  },
+			  body: JSON.stringify(body)
+		  });
+	  return await res.json();
   };
 
-  const getRequest = async (command) => await execCommand(command, { method: "GET" }).then(r=> {console.log(r); return r});
-  const setRequest = async (command, bodyData, isUpdate = false) =>
-	  await execCommand(command,
-	  {
-	  	method: isUpdate ? "PUT" : "POST",
-		  body: bodyData,
-	  }
-  );
-
-	const mapIssue = async ({key, fields}) => {
+	const mapIssue = async ({ key, fields }) => {
 		return {
 			uri: `https://${domain}.atlassian.net/browse/${key}`,
 			key,
