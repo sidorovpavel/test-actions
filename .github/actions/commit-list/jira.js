@@ -14,7 +14,15 @@ function connectJira(domain, user, token, projectName) {
 		  },
 		  json: true,
 		  ...body,
-	  });
+	  })
+		  .then(response => {
+		  console.log(
+			  `Response: ${response.status} ${response.statusText}`
+		  );
+		  return response.text();
+	  })
+		  .then(text => console.log(text))
+		  .catch(err => console.error(err));
   };
 
   const getRequest = async (command) => await execCommand(command, { method: "GET" });
