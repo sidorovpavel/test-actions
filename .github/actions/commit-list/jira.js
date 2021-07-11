@@ -3,8 +3,8 @@ const moment = require("moment");
 
 function connectJira(domain, user, token, projectName) {
 
- 	const execCommand = async (command, body) => {
-	  return await fetch(`https://${domain}.atlassian.net/rest/api/3/${command}`, {
+ 	const execCommand = (command, body) => {
+	  return fetch(`https://${domain}.atlassian.net/rest/api/3/${command}`, {
 		  headers: {
 			  Accept: "application/json",
 		  },
@@ -41,6 +41,7 @@ function connectJira(domain, user, token, projectName) {
 	};
 
 	const mapIssueType = (response) => {
+		console.log(response);
 		const types = new Map();
 		response.forEach(item => {
 			const { untranslatedName: name} = item;
