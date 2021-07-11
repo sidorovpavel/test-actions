@@ -44,7 +44,6 @@ function connectJira(domain, user, token, projectName) {
 	};
 
 	const mapIssueType = (response) => {
-		console.log(response);
 		const types = new Map();
 		response.forEach(item => {
 			const { untranslatedName: name} = item;
@@ -96,12 +95,8 @@ function connectJira(domain, user, token, projectName) {
 
 	return {
 		getIssues: async (arr) => {
-			const typePromise = new Promise((resolve) => {
-				resolve(getIssueType());
-			});
-
 			const [types, ...issues] = await Promise.all([
-				typePromise,
+				getIssueType(),
 				...arr.map(async item => getIssue(item))
 			]);
 
