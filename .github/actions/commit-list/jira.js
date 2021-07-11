@@ -13,7 +13,7 @@ function connectJira(domain, user, token, projectName) {
 	  });
   };
 
-  const getRequest = async (command) => await execCommand(command, { method: "GET" });
+  const getRequest = async (command) => await execCommand(command, { method: "GET" }).then(r=> {console.log(r); return r});
   const setRequest = async (command, bodyData, isUpdate = false) =>
 	  await execCommand(command,
 	  {
