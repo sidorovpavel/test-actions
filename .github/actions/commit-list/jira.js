@@ -19,17 +19,16 @@ function connectJira(domain, user, token, projectName) {
 	}
 
  	const setRequest = async (command, body, isUpdate = false) => {
-		const opts = {
-			method: isUpdate ? "PUT" : "POST",
-			headers: {
-				"Accept": "application/json",
-				"Authorization": `Basic ${AuthString}`,
-				"Content-Type": "application/json"
-			},
-			body: typeof body === 'string' ? body : JSON.stringify(body),
-		};
-		console.log(opts);
-	  const res = await fetch(`https://${domain}.atlassian.net/rest/api/3/${command}`, opts);
+	  const res = await fetch(`https://${domain}.atlassian.net/rest/api/3/${command}`,
+		  {
+			  method: isUpdate ? "PUT" : "POST",
+			  headers: {
+				  "Accept": "application/json",
+				  "Authorization": `Basic ${AuthString}`,
+				  "Content-Type": "application/json"
+			  },
+			  body,
+		  });
 	  return await res.json();
   };
 
