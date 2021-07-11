@@ -27,12 +27,14 @@ async function run() {
 
 		const jiraIssues = await jira.getIssues(issues);
 
-		await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
+		const comment = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
 			owner: repository.owner.login,
 			repo: repository.name,
 			pull_number: pull_request.number,
-			body: 'body'
+			body: 'text'
 		})
+
+		console.log(comment);
 
 		await jira.setVersionToIssues(releaseVersion, jiraIssues);
 	} catch (err) {
