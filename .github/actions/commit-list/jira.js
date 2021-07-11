@@ -9,21 +9,8 @@ function connectJira(domain, user, token, projectName) {
 			  Accept: "application/json",
 			  Authorization: `Basic ${Buffer.from(`${user}:${token}`).toString('base64')}`,
 		  },
-		  auth: {
-			  user,
-			  pass: token,
-		  },
-		  json: true,
 		  ...body,
-	  })
-		  .then(response => {
-		  console.log(
-			  `Response: ${response.status} ${response.statusText}`
-		  );
-		  return response.text();
-	  })
-		  .then(text => console.log(text))
-		  .catch(err => console.error(err));
+	  });
   };
 
   const getRequest = async (command) => await execCommand(command, { method: "GET" });
@@ -31,10 +18,6 @@ function connectJira(domain, user, token, projectName) {
 	  await execCommand(command,
 	  {
 	  	method: isUpdate ? "PUT" : "POST",
-		  headers: {
-			  Accept: "application/json",
-			  contentType: "application/json"
-		  },
 		  body: bodyData,
 	  }
   );
