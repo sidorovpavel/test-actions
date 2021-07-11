@@ -7,6 +7,7 @@ function connectJira(domain, user, token, projectName) {
 	  return fetch(`https://${domain}.atlassian.net/rest/api/3/${command}`, {
 		  headers: {
 			  Accept: "application/json",
+			  Authorization: `Basic ${Buffer.from(`${user}:${token}`).toString('base64')}`,
 		  },
 		  auth: {
 			  user,
