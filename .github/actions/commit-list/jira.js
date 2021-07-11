@@ -36,9 +36,9 @@ function connectJira(domain, user, token, projectName) {
 			  headers: {
 				  "Accept": "application/json",
 				  "Authorization": `Basic ${AuthString}`,
-				  "Content-Type": "application/json"
+				  "Content-Type": "application/json",
 			  },
-			  body: JSON.stringify(body)
+			  body,
 		  });
 	  return await res.json();
   };
@@ -93,7 +93,7 @@ function connectJira(domain, user, token, projectName) {
 
 	const issueSetVersion = async ({ key }, { id }) => {
 	  return setRequest(`issue/${key}`,
-		  { update: {fixVersions:[ { set: [ { id } ] } ] } },
+		  { update: { fixVersions:[ { set: [ { id } ] } ] } },
 		  true
 		)};
 
