@@ -18,9 +18,8 @@ jobs:
         with:
           github-token: ${{secrets.TOKEN}}
           script: |
-            const { repository, pull_request } = context.payload;
 
-            console.log(pull_request);
+            console.log(context);
             const commits = await github.pulls.listCommits({
               owner: context.repo.owner,
               repo: context.repo.repo,
