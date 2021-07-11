@@ -20,7 +20,7 @@ jobs:
           script: |
             const { repository, pull_request } = context.payload;
 
-            console.log(repository, pull_request);
+            console.log(pull_request);
             const commits = await github.pulls.listCommits({
               owner: context.repo.owner,
               repo: context.repo.repo,
