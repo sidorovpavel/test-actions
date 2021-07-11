@@ -26,7 +26,7 @@ function connectJira(domain, user, token, projectName) {
 				"Authorization": `Basic ${AuthString}`,
 				"Content-Type": "application/json"
 			},
-			body,
+			body: typeof body === 'string' ? body : JSON.stringify(body),
 		};
 		console.log(opts);
 	  const res = await fetch(`https://${domain}.atlassian.net/rest/api/3/${command}`, opts);
