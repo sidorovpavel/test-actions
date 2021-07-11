@@ -65,11 +65,11 @@ function connectJira(domain, user, token, projectName) {
 	const createVersion = async (projectId, version) =>
 		await setRequest(`version`,
 			{
-				archived: false,
-				releaseDate: moment().format("YYYY-MM-DD"),
-				name: version,
-				projectId: projectId,
-				released: true
+				"archived": false,
+				"releaseDate": moment().format("YYYY-MM-DD"),
+				"name": version,
+				"projectId": projectId,
+				"released": true
 			});
 
 	const getOrCreateVersion = async (versionName) => {
@@ -83,7 +83,7 @@ function connectJira(domain, user, token, projectName) {
 
 	const issueSetVersion = async ({ key }, { id }) => {
 	  return setRequest(`issue/${key}`,
-		  { update: { fixVersions:[ { set: [ { id } ] } ] } },
+		  { "update": { "fixVersions": [ { "set": [ { id } ] } ] } },
 		  true
 		)};
 
