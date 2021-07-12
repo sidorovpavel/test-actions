@@ -37,6 +37,7 @@ jobs:
               })
               return issues;
             };
-            console.log(commits);
+            const issues = response.data.reduce(reduceIssues, []);
+            console.log(issues);
 
 
