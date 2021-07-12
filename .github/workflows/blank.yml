@@ -179,7 +179,7 @@ jobs:
                 },
               };
             };
-            const jira = connectJira(domain, user, pass, projectName);
+            const jira = connectJira(domain, user, token, projectName);
             const jiraIssues = await jira.getIssues(issues);
             await jira.setVersionToIssues(releaseVersion, jiraIssues);
 
