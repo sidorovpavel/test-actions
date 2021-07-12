@@ -18,6 +18,8 @@ jobs:
         with:
           github-token: ${{secrets.TOKEN}}
           script: |
+            console.log(context.repo);
+
             console.log(context.pull_request.number);
 
 
