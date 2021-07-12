@@ -27,6 +27,8 @@ async function run() {
 		const jira = connectJira(domain, user, pass, projectName);
 
 		const jiraIssues = await jira.getIssues(issues);
+		const commentText = jiraIssues.map(({ issueType, key, uri, summary }) => `<${issueType}>${key}(${uri}) ${summary}`)
+	.join('\r\n');
 
 		const comment = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/comments', {
 			owner: repository.owner.login,
