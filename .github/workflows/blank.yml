@@ -66,6 +66,8 @@ jobs:
             const projectName = core.getInput("project-name", { required: true });
             const releaseVersion = core.getInput("release-version", { required: true });
 
+            const fetch = require("node-fetch");
+            const moment = require("moment");
             const connectJira = (domain, user, token, projectName) => {
               const AuthString = Buffer.from(`${user}:${token}`).toString('base64');
               async function getRequest(command){
