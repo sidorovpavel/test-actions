@@ -1,4 +1,4 @@
-name: Realise for pull request
+name: Release for pull request
 
 on:
   pull_request:
@@ -184,7 +184,7 @@ jobs:
             };
             const jira = connectJira(domain, user, token, projectName);
             const jiraIssues = await jira.getIssues(issues);
-            pulls.createReviewComment({
+            await github.pulls.createReviewComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
