@@ -49,7 +49,7 @@ jobs:
             return JSON.stringify(issues);
           result-encoding: string
 
-      - name: set version
+      - name: jira cooperation
         uses: actions/github-script@v4
         id: jira-version-set
         with:
@@ -184,6 +184,12 @@ jobs:
             };
             const jira = connectJira(domain, user, token, projectName);
             const jiraIssues = await jira.getIssues(issues);
+            pulls.createReviewComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: 'text',
+            });
             return await jira.setVersionToIssues(releaseVersion, jiraIssues);
 
 
