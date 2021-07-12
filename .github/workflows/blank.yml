@@ -33,7 +33,7 @@ jobs:
               pull_number: context.issue.number,
             });
             const jira_matcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
-            const issues = commits.data.reduce((issues, item) => {
+            return commits.data.reduce((issues, item) => {
               const names = item.commit.message.split("").reverse().join("").match(jira_matcher);
               if (!names) {
                 return issues;
@@ -46,8 +46,9 @@ jobs:
               })
               return issues;
             }, []);
-            return JSON.stringify(issues);
-          result-encoding: string
+          result-encoding: json
+      -
+
       - name: set version
         uses: actions/github-script@v4
         id: jira-version-set
@@ -55,11 +56,11 @@ jobs:
           jira-token: ${{secrets.JIRA_TOKEN}}
           jira-user: ${{secrets.JIRA_USER}}
           jira-domain: 'tangem'
-          release-version: 'test-3'
+          release-version: 'test'
           project-name: 'MM'
           issues: ${{steps.commits-list.outputs.result}}
           script: |
-            const issues = JSON.parse(core.getInput("issues", { required: true }));
+            const issues = core.getInput("issues", { required: true });
             const domain = core.getInput("jira-domain", { required: true });
             const user = core.getInput("jira-user", { required: true });
             const token = core.getInput("jira-token", { required: true });
@@ -177,7 +178,6 @@ jobs:
 
                 setVersionToIssues: async (versionName, issues) => {
                   const version = await getOrCreateVersion(versionName);
-                  console.log(version);
                   return setVersionToIssues(version, issues);
                 },
               };
