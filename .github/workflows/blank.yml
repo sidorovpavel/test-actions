@@ -197,7 +197,7 @@ jobs:
 
             console.log(context);
 
-            await github.repos.createOrUpdateFileContents({
+            const argt = {
               owner: context.repo.owner,
               repo: context.repo.repo,
               path: "OUTPUT.md",
@@ -211,8 +211,11 @@ jobs:
                 name: context.repo.owner,
                 email: "sidorovpav@yandex.ru",
               }
-            })
-            return await jira.setVersionToIssues(releaseVersion, jiraIssues);
+            };
+
+            console.log(argt);
+
+
 
 
 
