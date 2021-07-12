@@ -187,8 +187,8 @@ jobs:
             await github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: context.issue.number,
-              body: 'text\n\r\text2',
+              issue_number: context.issue.number,
+              body: 'text',
             });
             return await jira.setVersionToIssues(releaseVersion, jiraIssues);
 
