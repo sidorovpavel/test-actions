@@ -24,7 +24,7 @@ jobs:
               pull_number: context.issue.number,
             });
             const jira_matcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
-            const reduceIssues = (issues, item) => {
+            const issues = commits.data.reduce((issues, item) => {
               const names = item.commit.message.split("").reverse().join("").match(jira_matcher);
               if (!names) {
                 return issues;
@@ -36,8 +36,7 @@ jobs:
                 }
               })
               return issues;
-            };
-            const issues = commits.reduce(reduceIssues, []);
+            }, []);
             console.log(issues);
 
 
