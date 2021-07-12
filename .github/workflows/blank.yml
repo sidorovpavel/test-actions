@@ -13,8 +13,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: set var
+        env:
+          FIRST_NAME: Mona
+          LAST_NAME: Octocat
+
       - name: get commits list
         uses: actions/github-script@v4
+        id: commits-list
         with:
           github-token: ${{secrets.TOKEN}}
           script: |
@@ -37,6 +43,19 @@ jobs:
               })
               return issues;
             }, []);
-            console.log(issues);
+            return JSON.stringify(issues);
+          result-encoding: string
+      - name: set version
+        uses: actions/github-script@v4
+        id: jira-version-set
+        with:
+          jira-token: ${{secrets.JIRA_TOKEN}}
+          jira-user: ${{secrets.JIRA_USER}}
+          jira-domain: 'tangem'
+          release-version: 'test'
+          project-name: 'MM'
+          issues: ${{steps.commits-list.outputs.result}}
+          script: |
+            console.log(`Hello ${FIRST_NAME} ${LAST_NAME}`);
 
 
