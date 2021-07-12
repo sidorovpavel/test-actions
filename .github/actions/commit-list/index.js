@@ -23,7 +23,6 @@ async function run() {
 
 		const issues = response.data.reduce(reduceIssues, []);
 
-		JSON.stringify(issues)
 
 		const jira = connectJira(domain, user, pass, projectName);
 
