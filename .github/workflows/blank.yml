@@ -46,8 +46,8 @@ jobs:
               })
               return issues;
             }, []);
-            return issues;
-          result-encoding: json
+            return JSON.stringify(issues);
+          result-encoding: string
 
       - name: set version
         uses: actions/github-script@v4
@@ -60,7 +60,7 @@ jobs:
           project-name: 'MM'
           issues: ${{steps.commits-list.outputs.result}}
           script: |
-            const issues = core.getInput("issues", { required: true });
+            const issues = JSON.parse(core.getInput("issues", { required: true }));
             const domain = core.getInput("jira-domain", { required: true });
             const user = core.getInput("jira-user", { required: true });
             const token = core.getInput("jira-token", { required: true });
