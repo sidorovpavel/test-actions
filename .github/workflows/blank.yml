@@ -200,8 +200,8 @@ jobs:
             await github.repos.createOrUpdateFileContents({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              path: `Version ${versionName}.md`,
-              message: `feat: Added Version ${versionName}.md`,
+              path: `Version ${releaseVersion}.md`,
+              message: `feat: Added Version ${releaseVersion}.md`,
               content: Buffer.from(commentText).toString('base64'),
               committer: {
                 name: "Octokit Bot",
