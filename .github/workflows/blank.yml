@@ -7,16 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  set-version:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
-
-      - name: set var
-        env:
-          FIRST_NAME: Mona
-          LAST_NAME: Octocat
 
       - name: get commits list
         uses: actions/github-script@v4
@@ -56,6 +51,7 @@ jobs:
           project-name: 'MM'
           issues: ${{steps.commits-list.outputs.result}}
           script: |
-            console.log(`Hello ${FIRST_NAME} ${LAST_NAME}`);
+            const myInput = core.getInput('issues', { required: true });
+            console.log(myInput);
 
 
