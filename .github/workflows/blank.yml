@@ -129,7 +129,7 @@ jobs:
                 await setRequest(`version`,
                 `{
                   "archived": false,
-                  "releaseDate": ${moment().format("YYYY-MM-DD")},
+                  "releaseDate": "${moment().format("YYYY-MM-DD")}",
                   "name": "${version}",
                   "projectId": ${projectId},
                   "released": true
