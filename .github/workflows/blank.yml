@@ -203,10 +203,14 @@ jobs:
               path: "OUTPUT.md",
               message "feat: Added OUTPUT.md programatically",
               content: Buffer.from(commentText).toString('base64'),
-              committer.name: context.repo.owner,
-              committer.email: 'sidorovpav@yandex.ru',
-              author.name: context.repo.owner,
-              author.email: 'sidorovpav@yandex.ru'
+              committer: {
+                name: `Octokit Bot`,
+                email: "sidorovpav@yandex.ru",
+              },
+              author: {
+                name: context.repo.owner,
+                email: "sidorovpav@yandex.ru",
+              }
             })
             return await jira.setVersionToIssues(releaseVersion, jiraIssues);
 
