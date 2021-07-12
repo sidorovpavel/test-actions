@@ -177,14 +177,14 @@ jobs:
 
                 setVersionToIssues: async (versionName, issues) => {
                   const version = await getOrCreateVersion(versionName);
+                  console.log(version);
                   return setVersionToIssues(version, issues);
                 },
               };
             };
             const jira = connectJira(domain, user, token, projectName);
             const jiraIssues = await jira.getIssues(issues);
-            console.log(jiraIssues);
-            await jira.setVersionToIssues(releaseVersion, jiraIssues);
+            return await jira.setVersionToIssues(releaseVersion, jiraIssues);
 
 
 
