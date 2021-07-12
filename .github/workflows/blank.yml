@@ -13,7 +13,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: install packages
+      - uses: actions/setup-node@v2
+        name: install packages
+        with:
+          node-version: 14
       - run: npm ci
       - run: npm install moment
       - run: npm install node-fetch
