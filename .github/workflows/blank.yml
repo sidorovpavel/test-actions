@@ -200,7 +200,7 @@ jobs:
               repo: context.repo.repo,
               path: "OUTPUT.md",
               message "feat: Added OUTPUT.md programatically",
-              content: Buffer.from(commentText).toString('base64'),
+              content: "12",
               committer: {
                 name: "Octokit Bot",
                 email: "sidorovpav@yandex.ru",
