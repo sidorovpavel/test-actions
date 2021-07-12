@@ -185,7 +185,7 @@ jobs:
             const jira = connectJira(domain, user, token, projectName);
             const jiraIssues = await jira.getIssues(issues);
             const commentText = jiraIssues
-              .map(({ issueType, key, uri, summary }) => `\<${issueType}\>\[${key}\](${uri}) ${summary}`)
+              .map(({ issueType, key, uri, summary }) => `<${issueType}>[${key}](${uri}) ${summary}`)
               .join('\r\n');
 
             await github.issues.createComment({
