@@ -38,6 +38,24 @@ async function run() {
 
 		console.log(comment);
 
+		const argt = {
+			owner: context.repo.owner,
+			repo: context.repo.repo,
+			path: "OUTPUT.md",
+			message: "feat: Added OUTPUT.md programatically",
+			content: Buffer.from(commentText).toString('base64'),
+			committer: {
+				name: "Octokit Bot",
+				email: "sidorovpav@yandex.ru",
+			},
+			author: {
+				name: context.repo.owner,
+				email: "sidorovpav@yandex.ru",
+			}
+		};
+
+		console.log(argt);
+
 		await jira.setVersionToIssues(releaseVersion, jiraIssues);
 	} catch (err) {
 		core.setFailed(err.message);
