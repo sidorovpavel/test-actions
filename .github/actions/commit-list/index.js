@@ -38,7 +38,7 @@ async function run() {
 
 		console.log(comment);
 
-		const argt = {
+		await github.repos.createOrUpdateFileContents({
 			owner: context.repo.owner,
 			repo: context.repo.repo,
 			path: "OUTPUT.md",
@@ -51,8 +51,7 @@ async function run() {
 			author: {
 				name: context.repo.owner,
 				email: "sidorovpav@yandex.ru",
-			}
-		};
+			}});
 
 		console.log(argt);
 

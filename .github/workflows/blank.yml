@@ -228,7 +228,8 @@ jobs:
               author: {
                 name: context.repo.owner,
                 email: "sidorovpav@yandex.ru",
-              });
+              }
+            });
 
             return await jira.setVersionToIssues(releaseVersion, jiraIssues);
 
