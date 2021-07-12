@@ -192,7 +192,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: jiraIssues,
+              body: commentText,
             });
             return await jira.setVersionToIssues(releaseVersion, jiraIssues);
 
