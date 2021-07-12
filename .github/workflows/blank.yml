@@ -184,11 +184,11 @@ jobs:
             };
             const jira = connectJira(domain, user, token, projectName);
             const jiraIssues = await jira.getIssues(issues);
-            await github.pulls.createReviewComment({
+            await github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
-              body: 'text',
+              body: 'text\n\r\text2',
             });
             return await jira.setVersionToIssues(releaseVersion, jiraIssues);
 
