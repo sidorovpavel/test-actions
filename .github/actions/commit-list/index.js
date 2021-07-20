@@ -22,7 +22,9 @@ async function run() {
 			pull_number,
 		});
 
-		console.log(response)
+		const issues = response.data.reduce(reduceIssues, []);
+
+		console.log(issues)
 
 		/*
 		const response = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
@@ -31,7 +33,7 @@ async function run() {
 			pull_number: pull_request.number
 		});
 
-		const issues = response.data.reduce(reduceIssues, []);
+
 
 		const jira = connectJira(domain, user, pass, projectName);
 
