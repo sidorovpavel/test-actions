@@ -20,7 +20,7 @@ async function run() {
 
 		console.log(repository);
 
-		console.log(pull_request)
+		console.log(pull_request);
 		// const octokit = github.getOctokit(token);
 
 		/*
