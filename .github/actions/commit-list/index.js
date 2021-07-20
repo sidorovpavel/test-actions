@@ -1,6 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const connectJira = require("./jira");
+const connectJira = require("./jira_old");
 const reduceIssues = require("./reduceIssues");
 
 async function run() {
@@ -12,9 +12,18 @@ async function run() {
 		const projectName = core.getInput("project-name");
 		const releaseVersion = core.getInput("release-version");
 
-		const { repository, pull_request } = github.context.payload;
-		const octokit = github.getOctokit(token);
+		console.log(github.context);
 
+		console.log(github.context.payload);
+
+		const {repository, pull_request} = github.context.payload;
+
+		console.log(repository);
+
+		console.log(pull_request)
+		// const octokit = github.getOctokit(token);
+
+		/*
 		const response = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
 			owner: repository.owner.login,
 			repo: repository.name,
@@ -23,8 +32,9 @@ async function run() {
 
 		const issues = response.data.reduce(reduceIssues, []);
 
-
 		const jira = connectJira(domain, user, pass, projectName);
+
+
 
 		const jiraIssues = await jira.getIssues(issues);
 		const commentText = jiraIssues.map(({ issueType, key, uri, summary }) => `<${issueType}>${key}(${uri}) ${summary}`)
@@ -53,9 +63,8 @@ async function run() {
 				email: "sidorovpav@yandex.ru",
 			}});
 
-		console.log(argt);
+*/
 
-		await jira.setVersionToIssues(releaseVersion, jiraIssues);
 	} catch (err) {
 		core.setFailed(err.message);
 	}
