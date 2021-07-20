@@ -12,16 +12,17 @@ async function run() {
 		const projectName = core.getInput("project-name");
 		const releaseVersion = core.getInput("release-version");
 
-		console.log(github.context);
+		const octokit = github.getOctokit(token);
 
-		console.log(github.context.payload);
+		const {repo: {owner, repo}, issue: {number : pull_number }} = github.context;
 
-		const {repository, pull_request} = github.context.payload;
+		const response = await octokit.rest.pulls.listCommits({
+			owner,
+			repo,
+			pull_number,
+		});
 
-		console.log(repository);
-
-		console.log(pull_request);
-		// const octokit = github.getOctokit(token);
+		console.log(response)
 
 		/*
 		const response = await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/commits', {
