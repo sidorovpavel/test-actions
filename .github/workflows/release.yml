@@ -15,7 +15,8 @@ jobs:
       - name: commit-list-action
         uses: ./.github/actions/commit-list
         with:
-          repo-token: ${{secrets.TOKEN}}
+          github-token: ${{secrets.TOKEN}}
+          github-email: 'sidorovpav@ya.ru'
           jira-token: ${{secrets.JIRA_TOKEN}}
           jira-user: ${{secrets.JIRA_USER}}
           jira-domain: 'tangem'
