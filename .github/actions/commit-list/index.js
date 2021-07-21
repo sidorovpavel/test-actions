@@ -1,7 +1,7 @@
-import { getInput, setFailed } from '@actions/core';
-import jiraApi from './jira';
-import githubApi from './github';
-import { mapComment } from './utils';
+const { getInput, setFailed } =  require( '@actions/core');
+const jiraApi = require('./jira');
+const githubApi = require('./github');
+const { mapComment } = require('./utils');
 
 async function run() {
 	try {

@@ -1,15 +1,15 @@
-export const mapComment = ({
+const mapComment = ({
   issueType, key, url, summary,
 }) => `<${issueType}>${key}(${url}) ${summary}`;
 
-export const mapIssue = async ({ key, fields }) => ({
+const mapIssue = async ({ key, fields }) => ({
   key,
   issueTypeId: fields.issuetype.id,
   summary: fields.summary,
   existFixVersions: fields.fixVersions.length > 0,
 });
 
-export const mapIssueType = (response) => {
+const mapIssueType = (response) => {
   const types = new Map();
   response.forEach((item) => {
     const { untranslatedName: name } = item;
@@ -20,7 +20,7 @@ export const mapIssueType = (response) => {
 
 const jiraMatcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
 
-export const reduceIssues = (issues, item) => {
+const reduceIssues = (issues, item) => {
   const names = item.commit.message.split('').reverse().join('').match(jiraMatcher);
   if (!names) {
     return issues;
@@ -33,3 +33,5 @@ export const reduceIssues = (issues, item) => {
   });
   return issues;
 };
+
+exports = { reduceIssues, mapComment, mapIssueType, mapIssue };

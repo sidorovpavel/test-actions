@@ -1,6 +1,6 @@
-import moment from 'moment';
-import { mapIssue, mapIssueType } from './utils';
-import fetch from './jiraFetch';
+const moment = require('moment');
+const { mapIssue, mapIssueType } = require('./utils');
+const fetch = require('./jiraFetch');
 
 const jiraApi = (domain, user, token) => {
   const { setRequest, getRequest } = fetch(domain, user, token);
@@ -18,4 +18,4 @@ const jiraApi = (domain, user, token) => {
   };
 };
 
-export { jiraApi as default };
+module.exports = jiraApi;

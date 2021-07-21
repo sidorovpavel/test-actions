@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
 const jiraFetch = (domain, user, token) => {
   const AuthString = Buffer.from(`${user}:${token}`).toString('base64');
@@ -34,4 +34,4 @@ const jiraFetch = (domain, user, token) => {
   };
 };
 
-export { jiraFetch as default };
+module.exports = jiraFetch;
