@@ -13,7 +13,6 @@ async function run() {
 		const token = getInput('jira-token', { required: true });
 		const projectName = getInput('project-name', { required: true });
 		const releaseVersion = getInput('release-version', { required: true });
-
 		const defaultIssues = getInput('issues', { required: false });
 
 		const github = githubApi(githubToken, githubEmail, githubUser);

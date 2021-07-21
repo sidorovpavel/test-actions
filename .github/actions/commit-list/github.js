@@ -1,7 +1,7 @@
 const { context, getOctokit } =  require('@actions/github');
 const { reduceIssues } = require('./utils');
 
-const api = (githubToken, githubEmail, githubUser) => {
+const githubApi = (githubToken, githubEmail, githubUser) => {
   const { repo: { owner, repo }, issue: { number: pullNumber } } = context;
 
   const { rest } = getOctokit(githubToken);
@@ -42,4 +42,4 @@ const api = (githubToken, githubEmail, githubUser) => {
   };
 };
 
-module.exports = api;
+module.exports = githubApi;
