@@ -21,6 +21,7 @@ const mapIssueType = (response) => {
 const jiraMatcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
 
 const reduceIssues = (issues, item) => {
+  console.log(issues, item);
   const names = item.commit.message.split('').reverse().join('').match(jiraMatcher);
   if (!names) {
     return issues;
