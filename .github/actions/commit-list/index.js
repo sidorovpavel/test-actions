@@ -1,5 +1,5 @@
 const { getInput, setFailed } =  require( '@actions/core');
-const jiraApi = require('./jira');
+const Jira = require('./jira');
 const githubApi = require('./github');
 const { mapComment } = require('./utils');
 
@@ -15,9 +15,8 @@ async function run() {
 		const releaseVersion = getInput('release-version', { required: true });
 		const defaultIssues = getInput('issues', { required: false });
 
-		console.log(githubApi);
 		const github = githubApi(githubToken, githubEmail, githubUser);
-		const jira = jiraApi(domain, user, token, projectName);
+		const jira = new Jira(domain, user, token, projectName);
 
 		const issues = defaultIssues ? JSON.parse(defaultIssues) : await github.getIssues();
 

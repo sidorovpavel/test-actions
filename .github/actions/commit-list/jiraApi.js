@@ -1,21 +1,29 @@
 const moment = require('moment');
 const { mapIssue, mapIssueType } = require('./utils');
-const fetch = require('./jiraFetch');
+const JiraFetch = require('./jiraFetch');
 
-const jiraApi = (domain, user, token) => {
-  const { setRequest, getRequest } = fetch(domain, user, token);
+class JiraApi {
+  #jiraFetch
+  constructor(domain, user, token) {
+    this.#jiraFetch = new JiraFetch(domain, user, token);
+  }
 
-  return {
-    getIssueType: () => getRequest('issuetype').then(mapIssueType),
-    getIssue: (id) => getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`).then(mapIssue),
-    getProjectId: (projectName) => getRequest(`project/${projectName}`).then(({ id }) => id),
-    findProjectVersionByName: (projectName, version) => getRequest(`project/${projectName}/versions`).then((response) => response.find((item) => item.name === version)),
-    createVersion: (projectId, version) => setRequest('version',
-      `{"archived": false,"releaseDate": ${moment().format('YYYY-MM-DD')},"name": "${version}","projectId": ${projectId},"released": true}`),
-    issueSetVersion: ({ key }, { id }) => setRequest(`issue/${key}`,
+  getIssueType = () => this.#jiraFetch.getRequest('issuetype').then(mapIssueType);
+
+  getIssue = (id) => this.#jiraFetch.getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`).then(mapIssue);
+
+  getProjectId = (projectName) => this.#jiraFetch.getRequest(`project/${projectName}`).then(({ id }) => id);
+
+  findProjectVersionByName = (projectName, version) =>
+    this.#jiraFetch.getRequest(`project/${projectName}/versions`)
+      .then((response) => response.find((item) => item.name === version));
+
+  createVersion = (projectId, version) => this.#jiraFetch.setRequest('version',
+      `{"archived": false,"releaseDate": ${moment().format('YYYY-MM-DD')},"name": "${version}","projectId": ${projectId},"released": true}`);
+
+  issueSetVersion = ({ key }, { id }) => this.#jiraFetch.setRequest(`issue/${key}`,
       `{ "update": { "fixVersions": [ { "set": [ { "id": "${id}" } ] } ] } }`,
-      true),
-  };
-};
+      true);
+}
 
-module.exports = jiraApi;
+module.exports = JiraApi;

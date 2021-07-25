@@ -1,34 +1,44 @@
-const jiraApi = require('./jiraApi');
+const JiraApi = require('./jiraApi');
 
-function jira(domain, user, token, projectName) {
-  const api = jiraApi(domain, user, token);
+class Jira {
+  #api
+  #domain
+  #projectName
 
-  return {
-    getIssues: async (arr) => {
-      const [types, ...issues] = await Promise.all([
-        api.getIssueType(),
-        ...arr.map(async (item) => api.getIssue(item)),
-      ]);
+  constructor(domain, user, token, projectName) {
+    this.#api = new JiraApi(domain, user, token);
+    this.#projectName = projectName;
+    this.#domain = domain;
+  }
 
-      const sortArray = ['Bug', 'Improvement', 'New feature'];
+  getIssues = async (arr) => {
+    const [types, ...issues] = await Promise.all([
+      this.#api.getIssueType(),
+      ...arr.map(async (item) => this.#api.getIssue(item)),
+    ]);
 
-      return issues
-        .map((item) => ({ ...item, issueType: types.get(item.issueTypeId).name, url: `https://${domain}.atlassian.net/browse/${item.key}` }))
-        .filter((item) => item.issueType.toLowerCase() !== 'bug' || !item.existFixVersions)
-        .sort((a, b) => sortArray.indexOf(b.issueType) - sortArray.indexOf(a.issueType));
-    },
+    const sortArray = ['Bug', 'Improvement', 'New feature'];
 
-    setVersionToIssues: async (versionName, issues) => {
-      let version = await api.findProjectVersionByName(projectName, versionName);
-      if (!version) {
-        const projectId = await api.getProjectId(projectName);
-        version = await api.createVersion(projectId, versionName);
-      }
-      await Promise.all([
-        ...issues.map(async (item) => api.issueSetVersion(item, version)),
-      ]);
-    },
+    return issues
+      .map((item) => ({
+        ...item,
+        issueType: types.get(item.issueTypeId).name,
+        url: `https://${this.#domain}.atlassian.net/browse/${item.key}`
+      }))
+      .filter((item) => item.issueType.toLowerCase() !== 'bug' || !item.existFixVersions)
+      .sort((a, b) => sortArray.indexOf(b.issueType) - sortArray.indexOf(a.issueType));
+  };
+
+  setVersionToIssues = async (versionName, issues) => {
+    let version = await this.#api.findProjectVersionByName(this.#projectName, versionName);
+    if (!version) {
+      const projectId = await this.#api.getProjectId(this.#projectName);
+      version = await this.#api.createVersion(projectId, versionName);
+    }
+    return Promise.all([
+      ...issues.map(async (item) => this.#api.issueSetVersion(item, version)),
+    ]);
   };
 }
 
-module.exports = jira;
+module.exports = Jira;
