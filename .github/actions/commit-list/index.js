@@ -22,7 +22,10 @@ async function run() {
 		const issues = defaultIssues ? JSON.parse(defaultIssues) : await github.getIssues();
 
 		const jiraIssues = await jira.getIssues(issues);
-		const commentText = jiraIssues.map(mapComment).join('\r\n');
+
+		const commentText = jiraIssues
+			.map(({issueType, key, url, summary,}) => `<${issueType}>${key}(${url}) ${summary}`)
+			.join('\r\n');
 
 		await Promise.all([
 			github.createComment(commentText),

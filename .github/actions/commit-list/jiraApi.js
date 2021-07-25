@@ -6,14 +6,29 @@ class JiraApi {
   #jiraFetch
   constructor(domain, user, token) {
     this.#jiraFetch = new JiraFetch(domain, user, token);
-  }
+  };
 
   getIssueType = async () => {
-    const result = await this.#jiraFetch.getRequest('issuetype');
-    return mapIssueType(result);
-  }
+    const response = await this.#jiraFetch.getRequest('issuetype');
+    const types = new Map();
+    response.forEach((item) => {
+      const { untranslatedName: name } = item;
+      types.set(item.id, { name });
+    });
+    return types;
+  };
 
-  getIssue = async (id) => await this.#jiraFetch.getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`).then(mapIssue);
+  getIssue = async (id) => {
+    const response = await this.#jiraFetch.getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`);
+    return response.map(({ key, fields }) => (
+      {
+        key,
+        issueTypeId: fields.issuetype.id,
+        summary: fields.summary,
+        existFixVersions: fields.fixVersions.length > 0,
+      })
+    );
+  };
 
   getProjectId = (projectName) => this.#jiraFetch.getRequest(`project/${projectName}`).then(({ id }) => id);
 
