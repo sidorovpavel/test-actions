@@ -16,9 +16,15 @@ async function run() {
 		const defaultIssues = getInput('issues', { required: false });
 
 		const github = githubApi(githubToken, githubEmail, githubUser);
+		console.log(github);
+
 		const jira = new Jira(domain, user, token, projectName);
 
+		console.log(jira);
+
 		const issues = defaultIssues ? JSON.parse(defaultIssues) : await github.getIssues();
+
+		console.log(issues);
 
 		const jiraIssues = await jira.getIssues(issues);
 		const commentText = jiraIssues.map(mapComment).join('\r\n');
