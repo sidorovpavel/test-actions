@@ -1,10 +1,11 @@
 const { context, getOctokit } =  require('@actions/github');
-const { reduceIssues } = require('./utils');
 
 const githubApi = (githubToken, githubEmail, githubUser) => {
   const { repo: { owner, repo }, issue: { number: pullNumber } } = context;
 
   const { rest } = getOctokit(githubToken);
+
+  const jiraMatcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
 
   return {
     getIssues: async () => {
@@ -14,7 +15,22 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
         pull_number: pullNumber,
       });
 
-      return response.data.reduce(reduceIssues, []);
+      return response.data.reduce(
+        (issues, item) => {
+          const names = item.commit.message.split('').reverse().join('').match(jiraMatcher);
+          if (!names) {
+            return issues;
+          }
+          names.forEach((res) => {
+            const id = res.split('').reverse().join('');
+            if (issues.indexOf(id) === -1) {
+              issues.push(id);
+            }
+          });
+          return issues;
+        },
+        []
+      );
     },
 
     createComment: async (body) => rest.issues.createComment({
