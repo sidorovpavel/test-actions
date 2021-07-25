@@ -22,3 +22,5 @@ jobs:
           jira-domain: 'tangem'
           release-version: 'test'
           project-name: 'MM'
+          release-file-path: 'test/vesrions'
+          realese-file-prefix: 'abc'
