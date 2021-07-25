@@ -8,7 +8,10 @@ class JiraApi {
     this.#jiraFetch = new JiraFetch(domain, user, token);
   }
 
-  getIssueType = async () => await this.#jiraFetch.getRequest('issuetype').then(mapIssueType);
+  getIssueType = async () => {
+    const result = await this.#jiraFetch.getRequest('issuetype');
+    return mapIssueType(result);
+  }
 
   getIssue = async (id) => await this.#jiraFetch.getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`).then(mapIssue);
 

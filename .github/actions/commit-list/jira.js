@@ -17,8 +17,6 @@ class Jira {
       ...arr.map(async (item) => this.#api.getIssue(item)),
     ]);
 
-    console.log(types);
-
     const sortArray = ['Bug', 'Improvement', 'New feature'];
 
     return issues
