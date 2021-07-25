@@ -28,7 +28,8 @@ async function run() {
 			.map(({issueType, key, url, summary,}) => `<${issueType}>${key}(${url}) ${summary}`)
 			.join('\r\n');
 
-		const path = `${releaseFilePath}/${releaseFilePrefix}${releaseVersion}.md`
+		const path = `${releaseFilePath}/${releaseFilePrefix}${releaseVersion}.md`;
+		console.log(path);
 
 		await Promise.all([
 			github.createComment(commentText),
