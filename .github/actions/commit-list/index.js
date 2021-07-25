@@ -16,7 +16,6 @@ async function run() {
 		const defaultIssues = getInput('issues', { required: false });
 
 		const github = githubApi(githubToken, githubEmail, githubUser);
-		console.log(github);
 
 		const jira = new Jira(domain, user, token, projectName);
 

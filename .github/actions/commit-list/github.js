@@ -8,6 +8,14 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
 
   return {
     getIssues: async () => {
+      console.log({
+        owner,
+        repo,
+        pull_number: pullNumber,
+      });
+
+      console.log(rest);
+
       const response = await rest.pulls.listCommits({
         owner,
         repo,
