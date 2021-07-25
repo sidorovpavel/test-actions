@@ -9,6 +9,7 @@ class JiraApi {
 
   getIssueType = async () => {
     const response = await this.#jiraFetch.getRequest('issuetype');
+    console.log(response);
     const types = new Map();
     response.forEach((item) => {
       const { untranslatedName: name } = item;
@@ -19,6 +20,7 @@ class JiraApi {
 
   getIssue = async (id) => {
     const response = await this.#jiraFetch.getRequest(`issue/${id}/?fields=issuetype,summary,fixVersions`);
+    console.log(response);
     return response.map(({ key, fields }) => (
       {
         key,
