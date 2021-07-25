@@ -1,7 +1,6 @@
 const { getInput, setFailed } =  require( '@actions/core');
 const Jira = require('./jira');
 const githubApi = require('./github');
-const { mapComment } = require('./utils');
 
 async function run() {
 	try {

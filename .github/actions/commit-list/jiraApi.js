@@ -1,5 +1,4 @@
 const moment = require('moment');
-const { mapIssue, mapIssueType } = require('./utils');
 const JiraFetch = require('./jiraFetch');
 
 class JiraApi {
