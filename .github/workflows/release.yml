@@ -23,4 +23,4 @@ jobs:
           project-name: 'MM'
           release-version: 'test'
           release-file-path: 'test/vesrions'
-          realese-file-prefix: 'abc'
+          release-file-prefix: 'abc'
