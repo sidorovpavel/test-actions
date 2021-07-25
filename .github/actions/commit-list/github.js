@@ -40,10 +40,10 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
       body,
     }),
 
-    createOrUpdateFileContents: async (releaseVersion, content) => await rest.repos.createOrUpdateFileContents({
+    createOrUpdateFileContents: async (path, content) => await rest.repos.createOrUpdateFileContents({
       owner,
       repo,
-      path: `Version ${releaseVersion}.md`,
+      path,
       message: `feat: Added Version ${releaseVersion}.md`,
       content: Buffer.from(content).toString('base64'),
       committer: {

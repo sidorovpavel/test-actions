@@ -13,6 +13,8 @@ async function run() {
 		const projectName = getInput('project-name', { required: true });
 		const releaseVersion = getInput('release-version', { required: true });
 		const defaultIssues = getInput('issues', { required: false });
+		const releaseFilePath = getInput('release-file-path', { required: false, default: '' });
+		const releaseFilePrefix = getInput('release-file-prefix', { required: false, default: 'Changelog_' });
 
 		const github = githubApi(githubToken, githubEmail, githubUser);
 
@@ -26,9 +28,11 @@ async function run() {
 			.map(({issueType, key, url, summary,}) => `<${issueType}>${key}(${url}) ${summary}`)
 			.join('\r\n');
 
+		const path = `${releaseFilePath}/${releaseFilePrefix}${releaseVersion}.md`
+
 		await Promise.all([
 			github.createComment(commentText),
-			github.createOrUpdateFileContents(releaseVersion, commentText),
+			github.createOrUpdateFileContents(path, commentText),
 			jira.setVersionToIssues(releaseVersion, jiraIssues),
 		]);
 	} catch (err) {
