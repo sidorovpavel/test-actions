@@ -33,7 +33,7 @@ async function run() {
 
 		await Promise.all([
 			github.createComment(commentText),
-			github.createOrUpdateFileContents(path, commentText),
+			github.createOrUpdateFileContents(path, releaseVersion, commentText),
 			jira.setVersionToIssues(releaseVersion, jiraIssues),
 		]);
 	} catch (err) {

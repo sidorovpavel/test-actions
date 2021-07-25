@@ -40,7 +40,7 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
       body,
     }),
 
-    createOrUpdateFileContents: async (path, content) => await rest.repos.createOrUpdateFileContents({
+    createOrUpdateFileContents: async (path, releaseVersion, content) => await rest.repos.createOrUpdateFileContents({
       owner,
       repo,
       path,
