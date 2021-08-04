@@ -2,7 +2,7 @@ const { context, getOctokit } =  require('@actions/github');
 
 const githubApi = (githubToken, githubEmail, githubUser) => {
   const {repo: {owner, repo}, issue: {number: pullNumber}, sha} = context;
-  console.log(sha);
+  console.log(context);
   const {rest} = getOctokit(githubToken);
 
   const jiraMatcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
