@@ -22,5 +22,5 @@ jobs:
           jira-domain: 'tangem'
           project-name: 'MM'
           release-version: 'test-4'
-          release-file-path: 'test/versions'
+          release-file-path: 'test/versions22'
           release-file-prefix: 'abc'
