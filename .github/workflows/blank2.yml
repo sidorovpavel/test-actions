@@ -21,6 +21,6 @@ jobs:
           jira-user: ${{secrets.JIRA_USER}}
           jira-domain: 'tangem'
           project-name: 'MM'
-          release-version: 'test'
+          release-version: 'test-42'
           release-file-path: 'test/versions'
           release-file-prefix: 'abc'
