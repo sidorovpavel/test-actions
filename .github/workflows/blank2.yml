@@ -1,0 +1,26 @@
+name: CI2
+
+on:
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: commit-list-action
+        uses: tangem/jira-action@v0.5-alpha
+        with:
+          github-token: ${{secrets.TOKEN}}
+          github-email: 'sidorovpav@ya.ru'
+          jira-token: ${{secrets.JIRA_TOKEN}}
+          jira-user: ${{secrets.JIRA_USER}}
+          jira-domain: 'tangem'
+          project-name: 'MM'
+          release-version: 'test'
+          release-file-path: 'test/vesrions'
+          release-file-prefix: 'abc'
