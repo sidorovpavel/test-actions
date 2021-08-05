@@ -51,11 +51,12 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
           path,
           ref: 'main',
         });
+        console.log(res);
       } catch {
         //
       }
 
-      console.log(res);
+
       return rest.repos.createOrUpdateFileContents({
         owner,
         repo,
