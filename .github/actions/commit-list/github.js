@@ -49,7 +49,7 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
           owner,
           repo,
           path,
-          ref
+          ref: 'main',
         });
       } catch {
         //
