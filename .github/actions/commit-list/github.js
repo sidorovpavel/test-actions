@@ -47,6 +47,7 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
     }),
 
     createOrUpdateFileContents: async (path, releaseVersion, content) => {
+      console.log(path);
       const {data: {sha}} = await rest.repos.getContent({
         owner,
         repo,
