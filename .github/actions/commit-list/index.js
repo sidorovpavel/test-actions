@@ -26,7 +26,7 @@ async function run() {
 
 		const commentText = jiraIssues
 			.map(({issueType, key, url, summary,}) => `<${issueType}>${key}(${url}) ${summary}`)
-			.join('\r\n');
+			.join('\r\n\r\n');
 
 		const path = `${releaseFilePath}/${releaseFilePrefix}${releaseVersion}.md`;
 		//console.log(path);
