@@ -45,18 +45,18 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
       console.log(path, ref);
       let sha = undefined
       try {
-        const res = await rest.repos.getContent({
+        const {data} = await rest.repos.getContent({
           owner,
           repo,
           path,
           ref: 'main',
         });
-        console.log(res);
+        sha = data.sha;
       } catch {
         //
       }
 
-
+      console.log(sha);
       return rest.repos.createOrUpdateFileContents({
         owner,
         repo,
