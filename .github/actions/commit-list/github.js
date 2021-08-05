@@ -40,19 +40,20 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
       body,
     }),
 
-    test: async (path) => await rest.repos.getContent({
-      owner,
-      repo,
-      path,
-    }),
 
     createOrUpdateFileContents: async (path, releaseVersion, content) => {
       console.log(path);
-      const {data: {sha}} = await rest.repos.getContent({
-        owner,
-        repo,
-        path,
-      });
+      let sha = undefined
+      try {
+        const {data: {sha}} = await rest.repos.getContent({
+          owner,
+          repo,
+          path,
+        });
+      } catch {
+        //
+      }
+
       console.log(sha);
       return rest.repos.createOrUpdateFileContents({
         owner,
