@@ -40,22 +40,45 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
       body,
     }),
 
-    createOrUpdateFileContents: async (path, releaseVersion, content) => await rest.repos.createOrUpdateFileContents({
+    test: async (path) => await rest.repos.getContent({
       owner,
       repo,
       path,
-      message: `feat: Added Version ${releaseVersion}.md`,
-      content: Buffer.from(content).toString('base64'),
-      committer: {
-        name: githubUser || owner,
-        email: githubEmail,
-      },
-      author: {
-        name: githubUser || owner,
-        email: githubEmail,
-      },
-      sha,
     }),
+
+    getSha: async function getSHA(path) {
+      const result = await rest.repos.getContent({
+        owner,
+        repo,
+        path,
+      });
+
+      return result && result.data && result.data.sha ? result.data.sha : undefined
+    },
+
+    createOrUpdateFileContents: async (path, releaseVersion, content) => {
+      const {data: {sha}} = await rest.repos.getContent({
+        owner,
+        repo,
+        path,
+      });
+      return rest.repos.createOrUpdateFileContents({
+        owner,
+        repo,
+        path,
+        message: `feat: Added Version ${releaseVersion}.md`,
+        content: Buffer.from(content).toString('base64'),
+        committer: {
+          name: githubUser || owner,
+          email: githubEmail,
+        },
+        author: {
+          name: githubUser || owner,
+          email: githubEmail,
+        },
+        sha,
+      })
+    }
   };
 };
 
