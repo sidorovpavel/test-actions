@@ -2,7 +2,7 @@ const { context, getOctokit } =  require('@actions/github');
 
 const githubApi = (githubToken, githubEmail, githubUser) => {
   const {repo: {owner, repo}, issue: {number: pullNumber}, sha} = context;
-  console.log(context.payload.pull_request);
+  //console.log(context.payload.pull_request);
   const {rest} = getOctokit(githubToken);
 
   const jiraMatcher = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
@@ -46,22 +46,13 @@ const githubApi = (githubToken, githubEmail, githubUser) => {
       path,
     }),
 
-    getSha: async function getSHA(path) {
-      const result = await rest.repos.getContent({
-        owner,
-        repo,
-        path,
-      });
-
-      return result && result.data && result.data.sha ? result.data.sha : undefined
-    },
-
     createOrUpdateFileContents: async (path, releaseVersion, content) => {
       const {data: {sha}} = await rest.repos.getContent({
         owner,
         repo,
         path,
       });
+      console.log(sha);
       return rest.repos.createOrUpdateFileContents({
         owner,
         repo,
