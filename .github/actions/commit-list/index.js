@@ -29,7 +29,6 @@ async function run() {
 			.join('\r\n\r\n');
 
 		const path = `${releaseFilePath}/${releaseFilePrefix}${releaseVersion}.md`;
-		//console.log(path);
 
 		await Promise.all([
 			github.createComment(commentText),
