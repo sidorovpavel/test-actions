@@ -1,0 +1,30 @@
+name: "I have issues"
+
+description: "consume the output of the previous action and create a new issue in the repository"
+
+inputs:
+  github-token:
+    required: true
+    description: "Token for github"
+  github-email:
+    required: true
+    description: "Token for github"
+  jira-token:
+    required: true
+    description: "Token for Jira"
+  jira-domain:
+    required: true
+    description: "Jira domain"
+  jira-user:
+    required: true
+    description: "Jira user"
+  release-version:
+    required: true
+    description: "Version of release"
+  project-name:
+    required: true
+    description: "Alias of Project"
+
+runs:
+  using: "node12"
+  main: "index.js"

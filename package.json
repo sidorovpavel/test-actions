@@ -1,0 +1,20 @@
+{
+  "name": "test-actions",
+  "version": "1.0.0",
+  "description": "test github actions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sidorovpavel/test-actions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sidorovpavel/test-actions/issues"
+  },
+  "homepage": "https://github.com/sidorovpavel/test-actions#readme"
+}
