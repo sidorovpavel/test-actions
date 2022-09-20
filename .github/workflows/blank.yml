@@ -3,6 +3,8 @@ name: Release for pull request
 on:
   pull_request:
     branches: [ main ]
+  repository_dispatch:
+    types: [publish_blog]  
 
   workflow_dispatch:
 
