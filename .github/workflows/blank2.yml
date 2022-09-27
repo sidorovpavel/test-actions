@@ -16,11 +16,8 @@ jobs:
         uses: sidorovpavel/branches-difference-action@main
         with:
           github-token: ${{secrets.TOKEN}}
-          github-email: 'sidorovpav@ya.ru'
-          jira-token: ${{secrets.JIRA_TOKEN}}
-          jira-user: ${{secrets.JIRA_USER}}
-          jira-domain: 'tangem'
-          project-name: 'MM'
-          release-version: 'test'
-          release-file-path: 'test/vesrions'
-          release-file-prefix: 'abc'
+          project-name: 'JS'
+          branch-compare: 'main'
+          branch-comapre: 'develop'
+          pull-number: 1
+
