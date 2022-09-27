@@ -17,7 +17,7 @@ jobs:
         with:
           github-token: ${{secrets.TOKEN}}
           project-name: 'MM'
-          branch-compare: 'main'
-          branch-comapre: 'test'
+          base: 'main'
+          head: 'test'
           pull-number: '1'
 
