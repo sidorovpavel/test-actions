@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: commit-list-action
+        id: commit-list-action
         uses: sidorovpavel/branches-difference-action@main
         with:
           github-token: ${{secrets.TOKEN}}
