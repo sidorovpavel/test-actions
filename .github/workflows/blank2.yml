@@ -16,8 +16,8 @@ jobs:
         uses: sidorovpavel/branches-difference-action@main
         with:
           github-token: ${{secrets.TOKEN}}
-          project-name: 'JS'
+          project-name: 'MM'
           branch-compare: 'main'
-          branch-comapre: 'develop'
-          pull-number: 1
+          branch-comapre: 'test'
+          pull-number: 3
 
