@@ -21,3 +21,5 @@ jobs:
           head: 'test'
           pull-number: '1'
 
+      - name: Get the output time
+        run: echo "The time was ${{ steps.commit-list-action.outputs.issues }}"
