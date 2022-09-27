@@ -19,5 +19,5 @@ jobs:
           project-name: 'MM'
           branch-compare: 'main'
           branch-comapre: 'test'
-          pull-number: 3
+          pull-number: '3'
 
