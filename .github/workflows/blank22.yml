@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: commit-list-action
-        uses: sidorovpavel/branches-difference-action@main
+        uses: tangem/jira-actionn@master
         with:
           github-token: ${{secrets.TOKEN}}
           github-email: 'sidorovpav@ya.ru'
