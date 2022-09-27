@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: commit-list-action
-        uses: tangem/jira-actionn@master
+        uses: tangem/jira-action@master
         with:
           github-token: ${{secrets.TOKEN}}
           github-email: 'sidorovpav@ya.ru'
