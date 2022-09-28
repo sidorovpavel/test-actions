@@ -35,6 +35,6 @@ jobs:
         uses: sidorovpavel/jira-version-action@main
         with:
           project: MM
-          version: 1
+          version: New Version 1
           action: checkVersion
           
