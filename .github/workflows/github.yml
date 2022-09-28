@@ -36,4 +36,5 @@ jobs:
         with:
           project: JS
           version: 1
+          action: checkVersion
           
