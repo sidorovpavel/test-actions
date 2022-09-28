@@ -51,5 +51,12 @@ jobs:
           project: MM
           version: New Version 22
           action: renameVersion  
-          new-name: new name version;
+          new-name: new name version
           
+      - name: Jira Action 4
+        uses: sidorovpavel/jira-version-action@main
+        with:
+          project: MM
+          version: new name version
+          action: setVersionToIssues  
+          issues: ${{ steps.commit-list-action.outputs.issues }}       
