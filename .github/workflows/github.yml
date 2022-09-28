@@ -34,7 +34,7 @@ jobs:
       - name: Jira Action
         uses: sidorovpavel/jira-version-action@main
         with:
-          project: JS
+          project: MM
           version: 1
           action: checkVersion
           
