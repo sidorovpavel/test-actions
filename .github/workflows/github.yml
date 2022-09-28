@@ -31,10 +31,25 @@ jobs:
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           
-      - name: Jira Action
+      - name: Jira Action 1
         uses: sidorovpavel/jira-version-action@main
         with:
           project: MM
-          version: New Version 1
           action: checkVersion
+          version: New Version 1
+          
+      - name: Jira Action 2
+        uses: sidorovpavel/jira-version-action@main
+        with:
+          project: MM
+          action: createVersion 
+          version: New Version 22
+               
+      - name: Jira Action 3
+        uses: sidorovpavel/jira-version-action@main
+        with:
+          project: MM
+          version: New Version 22
+          action: renameVersion  
+          new-name: new name version;
           
