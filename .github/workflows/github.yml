@@ -66,7 +66,7 @@ jobs:
         uses: sidorovpavel/jira-version-action@main
         with:
           action: getBranchSummary  
-          issues: JS-45_trataa         
+          branch-name: JS-45_trataa         
 
       - name: Get the output time2
         run: echo "The time was ${{ steps.branch.outputs.result }}"
