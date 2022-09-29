@@ -59,4 +59,4 @@ jobs:
           project: MM
           version: new name version
           action: setVersionToIssues  
-          issues: '["js-1"]'      
+          issues: ${{ steps.commit-list-action.outputs.issues }}
