@@ -59,7 +59,7 @@ jobs:
           project: MM
           version: new name version
           action: setVersionToIssues  
-          issues: ${{ steps.commit-list-action.outputs.issues }}
+          issues: '["MM-1","MM-2"]'
           
       - name: Jira Action 5
         id: branch
