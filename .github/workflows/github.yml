@@ -57,7 +57,7 @@ jobs:
         uses: sidorovpavel/jira-version-action@main
         with:
           project: MM
-          version: new name version
+          version: New Version 22
           action: setVersionToIssues  
           issues: '["MM-1","MM-2"]'
           
