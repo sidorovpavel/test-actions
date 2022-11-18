@@ -35,7 +35,7 @@ jobs:
           
       - name: Jira Action 5
         id: branch
-        uses: sidorovpavel/jira-version-action@main
+        uses: tangem/jira-action@master
         with:
           action: getBranchSummary  
           branch-name: JS-45_trataa         
@@ -45,7 +45,7 @@ jobs:
         
       - name: Jira Action 6
         id: branch2
-        uses: sidorovpavel/jira-version-action@main
+        uses: tangem/jira-action@master
         with:
           action: getBranchId
           branch-name: JS-45_trataa         
