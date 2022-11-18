@@ -1,4 +1,4 @@
-name: CI22test
+name: CI22test-jira
 
 on:
   pull_request:
@@ -31,35 +31,7 @@ jobs:
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           
-      - name: Jira Action 1
-        uses: sidorovpavel/jira-version-action@main
-        with:
-          project: MM
-          action: checkVersion
-          version: New Version 1
-          
-      - name: Jira Action 2
-        uses: sidorovpavel/jira-version-action@main
-        with:
-          project: MM
-          action: createVersion 
-          version: New Version 22
-               
-      - name: Jira Action 3
-        uses: sidorovpavel/jira-version-action@main
-        with:
-          project: MM
-          version: New Version 22
-          action: renameVersion  
-          new-name: new name version
-          
-      - name: Jira Action 4
-        uses: sidorovpavel/jira-version-action@main
-        with:
-          project: MM
-          version: New Version 22
-          action: setVersionToIssues  
-          issues: '["MM-1","MM-2"]'
+
           
       - name: Jira Action 5
         id: branch
@@ -70,3 +42,14 @@ jobs:
 
       - name: Get the output time2
         run: echo "The time was ${{ steps.branch.outputs.result }}"
+        
+      - name: Jira Action 6
+        id: branch2
+        uses: sidorovpavel/jira-version-action@main
+        with:
+          action: getBranchId
+          branch-name: JS-45_trataa         
+
+      - name: Get the output time2
+        run: echo "The time was ${{ steps.branch2.outputs.result }}"
+        
