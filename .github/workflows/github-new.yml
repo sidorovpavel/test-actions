@@ -51,5 +51,8 @@ jobs:
           branch-name: JS-45_trataa         
 
       - name: Get the output time2
-        run: echo "The time was ${{ steps.branch2.outputs.result }}"
+        run: echo "The time was ${{ steps.branch2.outputs.key }}"
+        
+      - name: Get the output time3
+        run: echo "The time was ${{ steps.branch2.outputs.summary }}"
         
