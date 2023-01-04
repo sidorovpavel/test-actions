@@ -34,7 +34,7 @@ jobs:
           
       - name: Jira Action 5
         id: branch
-        uses: tangem/jira-action@js-106
+        uses: tangem/jira-action@JS-106
         with:
           action: getBranchSummary  
           branch-name: JS-45_trataa         
