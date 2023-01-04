@@ -12,15 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: commit-list-action
-        id: commit-list-action
-        uses: tangem/jira-action@JS-106
-        with:
-          github-token: ${{secrets.TOKEN}}
-          base: 'main'
-          head: 'test'
-          pull-number: '1'
-
       - name: Get the output time
         run: echo "The time was ${{ steps.commit-list-action.outputs.issues }}"
         
