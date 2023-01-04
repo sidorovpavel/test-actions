@@ -45,3 +45,10 @@ jobs:
       - name: Get the output time3
         run: echo "The summary was ${{ steps.branch.outputs.summary }}"
         
+      - name: Get the output time4
+        run: echo "The key was ${{ steps.branch.outputs }}"  
+        
+        
+      - name: Get the output time5
+        run: echo "The key was ${{ steps.branch.outputs.result }}"
+        
