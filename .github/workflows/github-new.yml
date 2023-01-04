@@ -14,7 +14,7 @@ jobs:
 
       - name: commit-list-action
         id: commit-list-action
-        uses: sidorovpavel/branches-difference-action@main
+        uses: tangem/jira-action@JS-106
         with:
           github-token: ${{secrets.TOKEN}}
           base: 'main'
