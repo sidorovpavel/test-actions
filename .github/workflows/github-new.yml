@@ -43,7 +43,6 @@ jobs:
 
       - name: Jira Create Version
         id: jira-create-version
-        if: ${{ steps.jira-check-version.outputs.result }} == false
         uses: tangem/jira-action@master
         with:
           action: createVersion
