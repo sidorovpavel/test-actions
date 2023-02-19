@@ -36,7 +36,7 @@ jobs:
         with:
           action: checkVersion
           project: JS
-          version: NextRelease
+          version: test
 
       - name: Jira Create Version
         if: ${{ steps.jira-check-version.outputs.result }} == false
@@ -44,7 +44,7 @@ jobs:
         with:
           action: createVersion
           project: JS
-          version: NextRelease     
+          version: test     
         
       - name: Get the output time2
         run: echo "The key was ${{ steps.branch.outputs.key }}"
