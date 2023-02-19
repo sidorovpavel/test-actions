@@ -1,4 +1,4 @@
-name: CI22test-jira
+name: CI-jira
 
 on:
   pull_request:
