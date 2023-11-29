@@ -14,7 +14,7 @@ jobs:
 
       - name: test
         id: test
-        uses: tangem/github-action@main
+        uses: tangem/github-action@update-gh-api
         with:
             github-token: ${{secrets.TOKEN}}
             base: 'main'
