@@ -1,4 +1,4 @@
-name: CI-jira
+name: CI-gh
 
 on:
   pull_request:
@@ -19,6 +19,5 @@ jobs:
             github-token: ${{secrets.TOKEN}}
             base: 'main'
             head: 'test'
-
       - name: Get the output issues
-        run: echo "Issues: ${{ steps.test.outputs.issues }}"
+        run: echo "Issues ${{ steps.test.outputs.issues }}"
