@@ -51,14 +51,6 @@ jobs:
       - name: Jira Check Version Log
         run: echo "The key was ${{ steps.jira-check-version.outputs.result }}"     
 
-      - name: Jira Create Version
-        id: jira-create-version
-        uses: tangem/jira-action@master
-        with:
-          action: createVersion
-          project: JS
-          version: test     
-
       - name: Jira Set Version To Issues
         uses: tangem/jira-action@master
         with:
