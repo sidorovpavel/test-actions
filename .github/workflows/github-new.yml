@@ -46,7 +46,7 @@ jobs:
         with:
           action: checkVersion
           project: IOS
-          version: test
+          version: 'Next Release'
           
       - name: Jira Check Version Log
         run: echo "The key was ${{ steps.jira-check-version.outputs.result }}"     
@@ -56,7 +56,7 @@ jobs:
         with:
           action: setVersionToIssues
           project: IOS
-          version: 'Nextt Release'
+          version: 'Next Release'
           issues: '["IOS-4974","IOS-5072"]'
           
       - name: Jira create Version Log
