@@ -1,0 +1,24 @@
+name: CI-jira
+
+on:
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: test
+        id: test
+        uses: tangem/github-action@main
+        with:
+            github-token: ${{secrets.TOKEN}}
+            base: 'main'
+            head: 'test'
+
+      - name: Get the output issues
+        run: echo "Issues: ${{ steps.test.outputs.issues }}"
