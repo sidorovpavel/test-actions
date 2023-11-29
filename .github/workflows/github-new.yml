@@ -52,7 +52,7 @@ jobs:
         run: echo "The key was ${{ steps.jira-check-version.outputs.result }}"     
 
       - name: Jira Set Version To Issues
-        uses: tangem/jira-action@master
+        uses: tangem/jira-action@JS-200
         with:
           action: setVersionToIssues
           project: IOS
