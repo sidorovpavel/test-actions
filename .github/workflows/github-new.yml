@@ -56,9 +56,16 @@ jobs:
         uses: tangem/jira-action@master
         with:
           action: createVersion
-          project: IOS
+          project: JS
           version: test     
-        
+
+      - name: Jira Set Version To Issues
+        uses: tangem/jira-action@master
+        with:
+          action: setVersionToIssues
+          project: MM
+          version: v1
+          issues: '["JS-100","JS-101"]'
           
       - name: Jira create Version Log
         run: echo "The key was ${{ steps.jira-create-version.outputs.result }}" 
