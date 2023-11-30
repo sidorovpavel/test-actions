@@ -24,7 +24,7 @@ jobs:
           
       - name: Jira summary
         id: summary
-        uses: tangem/jira-action@master
+        uses: tangem/jira-action@JS-200-2
         with:
           action: getIssuesSummary  
           issues: '["JS-45", "JS-200"]'   
@@ -35,14 +35,14 @@ jobs:
           
       - name: Jira Action 5
         id: branch
-        uses: tangem/jira-action@JS-106
+        uses: tangem/jira-action@JS-200-2
         with:
           action: getBranchSummary  
           branch-name: JS-45_trataa  
           
       - name: Jira Check Version
         id: jira-check-version
-        uses: tangem/jira-action@master
+        uses: tangem/jira-action@JS-200-2
         with:
           action: checkVersion
           project: IOS
@@ -52,7 +52,7 @@ jobs:
         run: echo "The key was ${{ steps.jira-check-version.outputs.result }}"     
 
       - name: Jira Set Version To Issues
-        uses: tangem/jira-action@JS-200
+        uses: tangem/jira-action@JS-200-2
         with:
           action: setVersionToIssues
           project: IOS
